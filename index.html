@@ -1017,6 +1017,192 @@
     .component-card:nth-child(6) { animation-delay: 0.30s; }
 
     .hidden { display: none !important; }
+
+    /* ── COMBINED STATUS BLOCK ── */
+    .combined-status {
+      border-radius: var(--radius-lg);
+      border: 1px solid;
+      padding: 20px 24px;
+      margin-bottom: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .combined-status.warn-level { background: #fffbeb; border-color: rgba(217,119,6,0.25); }
+    .combined-status.fail-level { background: #fef2f2; border-color: rgba(220,38,38,0.2); }
+    .combined-status.pass-level { background: #f0fdf4; border-color: rgba(22,163,74,0.2); }
+    .combined-status-left { flex: 1; min-width: 200px; }
+    .combined-status-eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--warn);
+      margin-bottom: 6px;
+    }
+    .combined-status.fail-level .combined-status-eyebrow { color: var(--fail); }
+    .combined-status.pass-level .combined-status-eyebrow { color: var(--pass); }
+    .combined-status-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #92400e;
+      letter-spacing: -0.2px;
+      margin-bottom: 4px;
+    }
+    .combined-status.fail-level .combined-status-title { color: #991b1b; }
+    .combined-status.pass-level .combined-status-title { color: #14532d; }
+    .combined-status-desc {
+      font-size: 13px;
+      color: #b45309;
+      line-height: 1.55;
+    }
+    .combined-status.fail-level .combined-status-desc { color: #b91c1c; }
+    .combined-status.pass-level .combined-status-desc { color: #15803d; }
+    .combined-status-badges {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .combined-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11.5px;
+      font-weight: 600;
+      padding: 5px 14px;
+      border-radius: 100px;
+    }
+    .combined-badge.finding-warn  { background: rgba(217,119,6,0.14); color: #92400e; border: 1px solid rgba(217,119,6,0.25); }
+    .combined-badge.finding-fail  { background: rgba(220,38,38,0.1); color: #991b1b; border: 1px solid rgba(220,38,38,0.2); }
+    .combined-badge.finding-pass  { background: rgba(22,163,74,0.1); color: #14532d; border: 1px solid rgba(22,163,74,0.2); }
+    .combined-badge.status-badge  { background: rgba(217,119,6,0.07); color: #b45309; border: 1px solid rgba(217,119,6,0.15); }
+    .combined-arrow { font-size: 13px; color: var(--text-tertiary); }
+
+    /* ── COMPONENT TRAITS ── */
+    .traits-section { margin-bottom: 32px; }
+    .section-heading {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 14px;
+    }
+    .traits-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+    @media (max-width: 900px) { .traits-grid { grid-template-columns: repeat(2, 1fr); } }
+    .trait-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      text-align: center;
+    }
+    .trait-card.trait-pass { border-color: rgba(22,163,74,0.2); background: #f0fdf4; }
+    .trait-card.trait-warn { border-color: rgba(217,119,6,0.2); background: #fffbeb; }
+    .trait-card.trait-fail { border-color: rgba(220,38,38,0.2); background: #fef2f2; }
+    .trait-name {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 10px;
+    }
+    .trait-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 12px;
+      border-radius: 100px;
+      margin-bottom: 10px;
+    }
+    .trait-card.trait-pass .trait-badge { background: var(--pass); color: #fff; }
+    .trait-card.trait-warn .trait-badge { background: var(--warn); color: #fff; }
+    .trait-card.trait-fail .trait-badge { background: var(--fail); color: #fff; }
+    .trait-desc {
+      font-size: 11.5px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+    .trait-card.trait-pass .trait-desc { color: #15803d; }
+    .trait-card.trait-warn .trait-desc { color: #b45309; }
+    .trait-card.trait-fail .trait-desc { color: #b91c1c; }
+
+    /* ── MOBILE & WEB READINESS ── */
+    .readiness-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin-bottom: 32px;
+    }
+    .readiness-section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-secondary);
+    }
+    .readiness-section-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    .readiness-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12.5px;
+    }
+    .readiness-table th {
+      text-align: left;
+      padding: 10px 16px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-tertiary);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      background: var(--bg-secondary);
+      border-bottom: 1px solid var(--border);
+    }
+    .readiness-table td {
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-secondary);
+      vertical-align: middle;
+      line-height: 1.5;
+    }
+    .readiness-table tr:last-child td { border-bottom: none; }
+    .readiness-table tr:hover td { background: var(--bg-secondary); }
+    .criterion-id {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--accent);
+      background: var(--accent-light);
+      padding: 2px 7px;
+      border-radius: 4px;
+      border: 1px solid rgba(36,105,255,0.15);
+      white-space: nowrap;
+    }
+    .readiness-result {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 100px;
+      white-space: nowrap;
+    }
+    .readiness-result.pass { background: #f0fdf4; color: var(--pass); }
+    .readiness-result.flag { background: #fffbeb; color: var(--warn); }
+    .readiness-result.fail { background: #fef2f2; color: var(--fail); }
   </style>
 </head>
 <body>
@@ -1193,9 +1379,24 @@
             <div class="detail-meta-chip">16 variants</div>
           </div>
         </div>
-        <div style="display:flex; gap:8px;">
+        <div style="display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end;">
           <span class="tag tag-stable" style="padding:5px 14px; font-size:12px;">Stable</span>
-          <span class="tag tag-partial" style="padding:5px 14px; font-size:12px;">Partial Pass</span>
+          <span class="tag tag-partial" style="padding:5px 14px; font-size:12px;">Fix</span>
+          <span class="tag" style="padding:5px 14px; font-size:12px; background:#fffbeb; color:#d97706; border-color:rgba(217,119,6,0.25);">Needs Refinement</span>
+        </div>
+      </div>
+
+      <!-- COMBINED STATUS -->
+      <div class="combined-status warn-level">
+        <div class="combined-status-left">
+          <div class="combined-status-eyebrow">Combined Status</div>
+          <div class="combined-status-title">Fix · Needs Refinement</div>
+          <div class="combined-status-desc">Structurally sound atomic component with clean variant naming. Requires token replacement, missing states (Pressed, Indeterminate, Error), and a full accessibility spec before it is production-ready.</div>
+        </div>
+        <div class="combined-status-badges">
+          <span class="combined-badge finding-warn">Finding: Fix</span>
+          <span class="combined-arrow">+</span>
+          <span class="combined-badge status-badge">Needs Refinement</span>
         </div>
       </div>
 
@@ -1258,6 +1459,95 @@
             </div>
           </div>
         </div>
+      </div>
+
+      <!-- COMPONENT TRAITS -->
+      <div class="traits-section">
+        <div class="section-heading">Component Traits</div>
+        <div class="traits-grid">
+          <div class="trait-card trait-pass">
+            <div class="trait-name">Reusable</div>
+            <div class="trait-badge">Pass</div>
+            <div class="trait-desc">Parameterised by state & size — usable in any context without modification.</div>
+          </div>
+          <div class="trait-card trait-warn">
+            <div class="trait-name">Self-contained</div>
+            <div class="trait-badge">Warn</div>
+            <div class="trait-desc">Visual box is self-contained, but hardcoded hex values create implicit platform coupling.</div>
+          </div>
+          <div class="trait-card trait-warn">
+            <div class="trait-name">Consistent</div>
+            <div class="trait-badge">Warn</div>
+            <div class="trait-desc">Naming is consistent, but missing states (Pressed, Indeterminate, Error) break parity with sibling components.</div>
+          </div>
+          <div class="trait-card trait-pass">
+            <div class="trait-name">Composable</div>
+            <div class="trait-badge">Pass</div>
+            <div class="trait-desc">Atom-level. Designed to be embedded in CheckboxItem (molecule) and CheckboxGroup (organism).</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MOBILE & WEB READINESS -->
+      <div class="readiness-section">
+        <div class="readiness-section-header">
+          <span class="readiness-section-title">Mobile &amp; Web Readiness Criteria</span>
+          <span class="status-pill warn">4 Pass · 3 Flag</span>
+        </div>
+        <table class="readiness-table">
+          <thead>
+            <tr>
+              <th style="width:60px;">ID</th>
+              <th>Criterion</th>
+              <th>Observation</th>
+              <th style="width:110px;">Result</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="criterion-id">C1</span></td>
+              <td>Layer Structure</td>
+              <td>Component Set is cleanly structured with a single Checkbox parent containing state-variant frames. No extraneous groups.</td>
+              <td><span class="readiness-result pass">✓ Pass</span></td>
+            </tr>
+            <tr>
+              <td><span class="criterion-id">C2</span></td>
+              <td>Variant Naming</td>
+              <td>Property=Value convention is consistent: Type=Unselected/Selected, State=Enabled/Hovered/Focused/Disabled, Size=Small/Medium.</td>
+              <td><span class="readiness-result pass">✓ Pass</span></td>
+            </tr>
+            <tr>
+              <td><span class="criterion-id">C3</span></td>
+              <td>Token Coverage</td>
+              <td>All fill, border, and radius values are hardcoded hex. No design tokens applied. Zero token coverage.</td>
+              <td><span class="readiness-result fail">✗ Fail</span></td>
+            </tr>
+            <tr>
+              <td><span class="criterion-id">C4</span></td>
+              <td>Native Mappability</td>
+              <td>Variants map to Boolean + enums cleanly. Missing Indeterminate variant prevents full native parity on both platforms.</td>
+              <td><span class="readiness-result flag">⚑ Flag</span></td>
+            </tr>
+            <tr>
+              <td><span class="criterion-id">C5</span></td>
+              <td>Interaction States</td>
+              <td>Hovered, Focused, Disabled present. Pressed missing — required for Android ripple and iOS tap highlight.</td>
+              <td><span class="readiness-result flag">⚑ Flag</span></td>
+            </tr>
+            <tr>
+              <td><span class="criterion-id">C6</span></td>
+              <td>Asset Quality</td>
+              <td>Checkmark icon is vector and scales correctly. No raster fills or non-uniform scaling detected.</td>
+              <td><span class="readiness-result pass">✓ Pass</span></td>
+            </tr>
+            <tr>
+              <td><span class="criterion-id">C7</span></td>
+              <td>Code Connect Linkability</td>
+              <td>Type, State, and Size map directly to Code Connect props. Missing Indeterminate and accessibilityLabel props block full linkability.</td>
+              <td><span class="readiness-result flag">⚑ Flag</span></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
 
       <!-- SCORE SUMMARY -->
