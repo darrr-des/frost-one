@@ -12,19 +12,20 @@
 
     :root {
       --bg: #ffffff;
-      --bg-secondary: #f5f5f7;
-      --bg-card: #ffffff;
-      --text-primary: #1d1d1f;
-      --text-secondary: #6e6e73;
-      --text-tertiary: #aeaeb2;
-      --accent: #2563eb;
-      --accent-hover: #1d4ed8;
-      --accent-light: #eff6ff;
-      --border: rgba(0,0,0,0.08);
-      --border-strong: rgba(0,0,0,0.12);
-      --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
-      --shadow-md: 0 4px 16px rgba(0,0,0,0.08), 0 1px 4px rgba(0,0,0,0.04);
-      --shadow-lg: 0 8px 32px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06);
+      --bg-secondary: #f5f5f5;
+      --bg-card: rgba(0,0,0,0.02);
+      --text-primary: #000000e6;
+      --text-secondary: #00000080;
+      --text-tertiary: #0000004d;
+      --accent: #2469ff;
+      --accent-hover: #1a56e8;
+      --accent-light: #eef3ff;
+      --border: #0000000f;
+      --border-mid: #0000001a;
+      --border-strong: #0000004d;
+      --shadow-sm: 0 1px 4px rgba(0,0,0,0.04);
+      --shadow-md: 0 4px 20px rgba(0,0,0,0.07);
+      --shadow-lg: 0 12px 40px rgba(0,0,0,0.10);
       --sidebar-width: 240px;
       --topbar-height: 60px;
       --radius-sm: 8px;
@@ -33,7 +34,7 @@
       --radius-xl: 20px;
       --font: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
       --font-mono: 'JetBrains Mono', 'SF Mono', monospace;
-      --badge-new: #2563eb;
+      --badge-new: #2469ff;
       --badge-stable: #16a34a;
       --badge-deprecated: #ea580c;
       --badge-partial: #d97706;
@@ -129,7 +130,7 @@
     .topbar-search input:focus {
       background: var(--bg);
       border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(37,99,235,0.12);
+      box-shadow: 0 0 0 3px rgba(36,105,255,0.12);
     }
 
     .topbar-search-icon {
@@ -253,20 +254,22 @@
       border-radius: 20px;
     }
 
-    .sidebar-badge.new { background: var(--accent-light); color: var(--accent); }
-    .sidebar-badge.count { background: var(--bg-secondary); color: var(--text-tertiary); }
+    .sidebar-badge.new { background: var(--accent-light); color: var(--accent); border: 1px solid rgba(36,105,255,0.15); }
+    .sidebar-badge.count { background: transparent; color: var(--text-tertiary); border: 1px solid var(--border-mid); }
 
     /* ── MAIN ── */
     .main {
       margin-left: var(--sidebar-width);
       flex: 1;
-      padding: 40px 48px;
+      padding: 56px 56px 80px;
       max-width: 1200px;
     }
 
     /* ── PAGE HEADER ── */
     .page-header {
-      margin-bottom: 40px;
+      margin-bottom: 56px;
+      padding-bottom: 40px;
+      border-bottom: 1px solid var(--border);
     }
 
     .page-header-eyebrow {
@@ -275,22 +278,23 @@
       letter-spacing: 0.08em;
       text-transform: uppercase;
       color: var(--accent);
-      margin-bottom: 8px;
+      margin-bottom: 12px;
     }
 
     .page-header h1 {
-      font-size: 32px;
+      font-size: 42px;
       font-weight: 700;
-      letter-spacing: -0.5px;
+      letter-spacing: -0.03em;
       color: var(--text-primary);
-      margin-bottom: 10px;
+      margin-bottom: 14px;
+      line-height: 1.1;
     }
 
     .page-header p {
-      font-size: 15px;
+      font-size: 16px;
       color: var(--text-secondary);
-      max-width: 560px;
-      line-height: 1.6;
+      max-width: 520px;
+      line-height: 1.65;
     }
 
     .page-header-meta {
@@ -339,9 +343,12 @@
     /* ── COMPONENT GRID ── */
     .component-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(3, minmax(200px, 1fr));
+      gap: 16px;
     }
+
+    @media (max-width: 1080px) { .component-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 640px)  { .component-grid { grid-template-columns: 1fr; } }
 
     /* ── COMPONENT CARD ── */
     .component-card {
@@ -349,15 +356,15 @@
       border: 1px solid var(--border);
       border-radius: var(--radius-lg);
       overflow: hidden;
-      transition: transform 0.22s ease, box-shadow 0.22s ease;
-      box-shadow: var(--shadow-sm);
+      transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
       cursor: pointer;
       animation: fadeUp 0.4s ease both;
     }
 
     .component-card:hover {
-      transform: translateY(-3px);
+      transform: translateY(-4px);
       box-shadow: var(--shadow-lg);
+      border-color: var(--border-mid);
     }
 
     @keyframes fadeUp {
@@ -366,7 +373,7 @@
     }
 
     .card-preview {
-      height: 160px;
+      height: 200px;
       background: var(--bg-secondary);
       display: flex;
       align-items: center;
@@ -379,8 +386,8 @@
     .card-preview-grid {
       position: absolute;
       inset: 0;
-      background-image: radial-gradient(circle, rgba(0,0,0,0.06) 1px, transparent 1px);
-      background-size: 20px 20px;
+      background-image: radial-gradient(circle, rgba(0,0,0,0.05) 1px, transparent 1px);
+      background-size: 24px 24px;
     }
 
     .card-preview-content {
@@ -402,16 +409,16 @@
     }
 
     .card-name {
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 600;
       color: var(--text-primary);
-      letter-spacing: -0.2px;
+      letter-spacing: -0.01em;
     }
 
     .card-description {
       font-size: 13px;
       color: var(--text-secondary);
-      line-height: 1.55;
+      line-height: 1.6;
       margin-bottom: 14px;
     }
 
@@ -423,17 +430,18 @@
 
     .tag {
       font-size: 11px;
-      font-weight: 600;
-      padding: 3px 9px;
+      font-weight: 500;
+      padding: 3px 10px;
       border-radius: 100px;
-      letter-spacing: 0.02em;
+      letter-spacing: 0.01em;
+      border: 1px solid var(--border-mid);
     }
 
-    .tag-new      { background: #eff6ff; color: var(--badge-new); }
-    .tag-stable   { background: #f0fdf4; color: var(--badge-stable); }
-    .tag-deprecated { background: #fff7ed; color: var(--badge-deprecated); }
-    .tag-partial  { background: #fffbeb; color: var(--badge-partial); }
-    .tag-default  { background: var(--bg-secondary); color: var(--text-secondary); }
+    .tag-new      { background: #eef3ff; color: var(--badge-new); border-color: rgba(36,105,255,0.15); }
+    .tag-stable   { background: #f0fdf4; color: var(--badge-stable); border-color: rgba(22,163,74,0.15); }
+    .tag-deprecated { background: #fff7ed; color: var(--badge-deprecated); border-color: rgba(234,88,12,0.15); }
+    .tag-partial  { background: #fffbeb; color: var(--badge-partial); border-color: rgba(217,119,6,0.15); }
+    .tag-default  { background: transparent; color: var(--text-secondary); border-color: var(--border-mid); }
 
     .card-footer {
       display: flex;
