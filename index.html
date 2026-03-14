@@ -1,0 +1,1880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Frost One — Design System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #ffffff;
+      --bg-secondary: #f5f5f7;
+      --bg-card: #ffffff;
+      --text-primary: #1d1d1f;
+      --text-secondary: #6e6e73;
+      --text-tertiary: #aeaeb2;
+      --accent: #2563eb;
+      --accent-hover: #1d4ed8;
+      --accent-light: #eff6ff;
+      --border: rgba(0,0,0,0.08);
+      --border-strong: rgba(0,0,0,0.12);
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.08), 0 1px 4px rgba(0,0,0,0.04);
+      --shadow-lg: 0 8px 32px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06);
+      --sidebar-width: 240px;
+      --topbar-height: 60px;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 20px;
+      --font: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+      --font-mono: 'JetBrains Mono', 'SF Mono', monospace;
+      --badge-new: #2563eb;
+      --badge-stable: #16a34a;
+      --badge-deprecated: #ea580c;
+      --badge-partial: #d97706;
+      --pass: #16a34a;
+      --warn: #d97706;
+      --fail: #dc2626;
+      --unknown: #6e6e73;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text-primary);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ── TOP BAR ── */
+    .topbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: var(--topbar-height);
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      padding: 0 24px;
+      gap: 20px;
+      z-index: 100;
+    }
+
+    .topbar-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+
+    .topbar-logo-mark {
+      width: 28px; height: 28px;
+      background: var(--accent);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .topbar-logo-mark svg { width: 16px; height: 16px; }
+
+    .topbar-logo-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-primary);
+      letter-spacing: -0.2px;
+    }
+
+    .topbar-logo-version {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text-tertiary);
+      background: var(--bg-secondary);
+      padding: 2px 7px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+    }
+
+    .topbar-search {
+      flex: 1;
+      max-width: 480px;
+      position: relative;
+    }
+
+    .topbar-search input {
+      width: 100%;
+      height: 36px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 0 16px 0 38px;
+      font-family: var(--font);
+      font-size: 13.5px;
+      color: var(--text-primary);
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .topbar-search input::placeholder { color: var(--text-tertiary); }
+
+    .topbar-search input:focus {
+      background: var(--bg);
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(37,99,235,0.12);
+    }
+
+    .topbar-search-icon {
+      position: absolute;
+      left: 12px; top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-tertiary);
+      pointer-events: none;
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-left: auto;
+    }
+
+    .topbar-btn {
+      height: 32px;
+      padding: 0 14px;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      background: transparent;
+      font-family: var(--font);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .topbar-btn:hover {
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+    }
+
+    .topbar-btn.primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    .topbar-btn.primary:hover { background: var(--accent-hover); }
+
+    /* ── LAYOUT ── */
+    .layout {
+      display: flex;
+      padding-top: var(--topbar-height);
+      min-height: 100vh;
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      width: var(--sidebar-width);
+      flex-shrink: 0;
+      position: fixed;
+      top: var(--topbar-height);
+      left: 0;
+      bottom: 0;
+      overflow-y: auto;
+      padding: 20px 12px;
+      border-right: 1px solid var(--border);
+      background: var(--bg);
+    }
+
+    .sidebar::-webkit-scrollbar { width: 0; }
+
+    .sidebar-section { margin-bottom: 24px; }
+
+    .sidebar-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      padding: 0 12px;
+      margin-bottom: 4px;
+    }
+
+    .sidebar-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 12px;
+      border-radius: var(--radius-sm);
+      font-size: 13.5px;
+      font-weight: 450;
+      color: var(--text-secondary);
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.15s ease;
+      position: relative;
+    }
+
+    .sidebar-item:hover {
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+    }
+
+    .sidebar-item.active {
+      background: var(--accent-light);
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .sidebar-item .dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+      opacity: 0.5;
+      flex-shrink: 0;
+    }
+
+    .sidebar-item.active .dot { opacity: 1; }
+
+    .sidebar-badge {
+      margin-left: auto;
+      font-size: 10px;
+      font-weight: 600;
+      padding: 1px 6px;
+      border-radius: 20px;
+    }
+
+    .sidebar-badge.new { background: var(--accent-light); color: var(--accent); }
+    .sidebar-badge.count { background: var(--bg-secondary); color: var(--text-tertiary); }
+
+    /* ── MAIN ── */
+    .main {
+      margin-left: var(--sidebar-width);
+      flex: 1;
+      padding: 40px 48px;
+      max-width: 1200px;
+    }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      margin-bottom: 40px;
+    }
+
+    .page-header-eyebrow {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .page-header h1 {
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: var(--text-primary);
+      margin-bottom: 10px;
+    }
+
+    .page-header p {
+      font-size: 15px;
+      color: var(--text-secondary);
+      max-width: 560px;
+      line-height: 1.6;
+    }
+
+    .page-header-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12.5px;
+      color: var(--text-tertiary);
+    }
+
+    .meta-item strong { color: var(--text-secondary); font-weight: 500; }
+
+    /* ── FILTER BAR ── */
+    .filter-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      height: 30px;
+      padding: 0 14px;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      background: transparent;
+      font-family: var(--font);
+      font-size: 12.5px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .filter-btn:hover { background: var(--bg-secondary); color: var(--text-primary); }
+    .filter-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+    /* ── COMPONENT GRID ── */
+    .component-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 20px;
+    }
+
+    /* ── COMPONENT CARD ── */
+    .component-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      transition: transform 0.22s ease, box-shadow 0.22s ease;
+      box-shadow: var(--shadow-sm);
+      cursor: pointer;
+      animation: fadeUp 0.4s ease both;
+    }
+
+    .component-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .card-preview {
+      height: 160px;
+      background: var(--bg-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .card-preview-grid {
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(0,0,0,0.06) 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+
+    .card-preview-content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .card-body { padding: 20px; }
+
+    .card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .card-name {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-primary);
+      letter-spacing: -0.2px;
+    }
+
+    .card-description {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.55;
+      margin-bottom: 14px;
+    }
+
+    .card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .tag {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 9px;
+      border-radius: 100px;
+      letter-spacing: 0.02em;
+    }
+
+    .tag-new      { background: #eff6ff; color: var(--badge-new); }
+    .tag-stable   { background: #f0fdf4; color: var(--badge-stable); }
+    .tag-deprecated { background: #fff7ed; color: var(--badge-deprecated); }
+    .tag-partial  { background: #fffbeb; color: var(--badge-partial); }
+    .tag-default  { background: var(--bg-secondary); color: var(--text-secondary); }
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+    }
+
+    .card-score {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-secondary);
+    }
+
+    .score-dots {
+      display: flex;
+      gap: 3px;
+    }
+
+    .score-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+    }
+
+    .score-dot.pass { background: var(--pass); }
+    .score-dot.warn { background: var(--warn); }
+    .score-dot.fail { background: var(--fail); }
+    .score-dot.empty { background: var(--border-strong); }
+
+    .card-action {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* ── DETAIL VIEW ── */
+    .detail-view {
+      display: none;
+      animation: fadeUp 0.3s ease;
+    }
+
+    .detail-view.visible { display: block; }
+
+    .detail-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--accent);
+      cursor: pointer;
+      margin-bottom: 28px;
+      text-decoration: none;
+      transition: opacity 0.15s;
+    }
+
+    .detail-back:hover { opacity: 0.7; }
+
+    .detail-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 32px;
+      gap: 24px;
+    }
+
+    .detail-header-left h1 {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.4px;
+      margin-bottom: 8px;
+    }
+
+    .detail-header-left p {
+      font-size: 14px;
+      color: var(--text-secondary);
+      max-width: 480px;
+      line-height: 1.6;
+    }
+
+    .detail-meta {
+      display: flex;
+      gap: 10px;
+      margin-top: 16px;
+      flex-wrap: wrap;
+    }
+
+    .detail-meta-chip {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 500;
+      padding: 5px 12px;
+      border-radius: 100px;
+      background: var(--bg-secondary);
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
+    }
+
+    /* ── LIVE PREVIEW ── */
+    .preview-section {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin-bottom: 32px;
+    }
+
+    .preview-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(255,255,255,0.7);
+    }
+
+    .preview-title {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .preview-controls {
+      display: flex;
+      gap: 6px;
+    }
+
+    .preview-control-btn {
+      height: 26px;
+      padding: 0 12px;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      font-family: var(--font);
+      font-size: 11.5px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .preview-control-btn:hover, .preview-control-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    .preview-canvas {
+      padding: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 200px;
+      background-image: radial-gradient(circle, rgba(0,0,0,0.05) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+
+    .preview-states {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 32px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .preview-state-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .preview-state-label {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text-tertiary);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .preview-checkboxes {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    /* ── LIVE CHECKBOX COMPONENT ── */
+    .frost-checkbox {
+      width: 16px; height: 16px;
+      border-radius: 3px;
+      border: 1.5px solid #cbd5e1;
+      background: transparent;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      flex-shrink: 0;
+    }
+
+    .frost-checkbox.small { width: 12px; height: 12px; }
+    .frost-checkbox.medium { width: 16px; height: 16px; }
+
+    .frost-checkbox.selected {
+      background: #2563eb;
+      border-color: #2563eb;
+    }
+
+    .frost-checkbox.hovered {
+      background: #f8fafc;
+      border-color: #cbd5e1;
+    }
+
+    .frost-checkbox.selected.hovered {
+      background: #1d4ed8;
+      border-color: #1d4ed8;
+    }
+
+    .frost-checkbox.focused {
+      background: #f8fafc;
+      border-color: #cbd5e1;
+      box-shadow: 0 0 0 3px rgba(37,99,235,0.2);
+    }
+
+    .frost-checkbox.selected.focused {
+      background: #1d4ed8;
+      border-color: #1d4ed8;
+      box-shadow: 0 0 0 3px rgba(37,99,235,0.2);
+    }
+
+    .frost-checkbox.disabled {
+      border-color: #e5e7eb;
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+
+    .frost-checkbox.selected.disabled {
+      background: #bfdbfe;
+      border-color: transparent;
+    }
+
+    .frost-checkbox svg {
+      width: 10px; height: 10px;
+      opacity: 0;
+      transform: scale(0.5);
+      transition: all 0.15s ease;
+    }
+
+    .frost-checkbox.small svg { width: 8px; height: 8px; }
+
+    .frost-checkbox.selected svg {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* ── ASSESSMENT SECTIONS ── */
+    .assessment-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 32px;
+    }
+
+    @media (max-width: 900px) { .assessment-grid { grid-template-columns: 1fr; } }
+
+    .assessment-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+
+    .assessment-section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-secondary);
+    }
+
+    .assessment-section-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-number {
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .status-pill {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 100px;
+    }
+
+    .status-pill.pass { background: #f0fdf4; color: var(--pass); }
+    .status-pill.warn { background: #fffbeb; color: var(--warn); }
+    .status-pill.fail { background: #fef2f2; color: var(--fail); }
+    .status-pill.partial { background: #fffbeb; color: var(--badge-partial); }
+
+    .assessment-section-body { padding: 16px 20px; }
+
+    .assessment-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+    }
+
+    .assessment-row:last-child { border-bottom: none; }
+
+    .assessment-icon {
+      width: 16px; height: 16px;
+      flex-shrink: 0;
+      margin-top: 1px;
+      font-size: 13px;
+      line-height: 1;
+    }
+
+    .assessment-row-label {
+      flex: 1;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    .assessment-row-label strong {
+      display: block;
+      color: var(--text-primary);
+      font-weight: 500;
+      margin-bottom: 1px;
+    }
+
+    .assessment-row-value {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-tertiary);
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    /* ── VARIANT TABLE ── */
+    .variant-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12.5px;
+      margin-top: 4px;
+    }
+
+    .variant-table th {
+      text-align: left;
+      padding: 8px 12px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-tertiary);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      background: var(--bg-secondary);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .variant-table td {
+      padding: 9px 12px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-secondary);
+      vertical-align: middle;
+    }
+
+    .variant-table tr:last-child td { border-bottom: none; }
+    .variant-table tr:hover td { background: var(--bg-secondary); }
+
+    .variant-table code {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      background: var(--bg-secondary);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: var(--accent);
+      border: 1px solid var(--border);
+    }
+
+    /* ── API BLOCK ── */
+    .api-block {
+      background: #0f1117;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      margin-bottom: 24px;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .api-block-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .api-block-lang {
+      font-size: 11px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.3);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .api-block-copy {
+      font-size: 11px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.3);
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: var(--font);
+      transition: color 0.15s;
+      padding: 0;
+    }
+
+    .api-block-copy:hover { color: rgba(255,255,255,0.7); }
+
+    .api-block pre {
+      padding: 16px;
+      font-family: var(--font-mono);
+      font-size: 12.5px;
+      line-height: 1.7;
+      overflow-x: auto;
+      color: #e2e8f0;
+    }
+
+    .syn-keyword  { color: #c084fc; }
+    .syn-type     { color: #67e8f9; }
+    .syn-string   { color: #86efac; }
+    .syn-comment  { color: #475569; font-style: italic; }
+    .syn-number   { color: #fcd34d; }
+    .syn-function { color: #93c5fd; }
+
+    /* ── SCORE SUMMARY ── */
+    .score-summary {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      margin-bottom: 32px;
+    }
+
+    .score-summary-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: var(--text-primary);
+    }
+
+    .score-bars {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .score-bar-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .score-bar-label {
+      width: 160px;
+      font-size: 12.5px;
+      color: var(--text-secondary);
+      flex-shrink: 0;
+    }
+
+    .score-bar-track {
+      flex: 1;
+      height: 6px;
+      background: var(--bg-secondary);
+      border-radius: 100px;
+      overflow: hidden;
+    }
+
+    .score-bar-fill {
+      height: 100%;
+      border-radius: 100px;
+      transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .score-bar-fill.pass { background: var(--pass); }
+    .score-bar-fill.warn { background: var(--warn); }
+    .score-bar-fill.fail { background: var(--fail); }
+
+    .score-bar-value {
+      width: 36px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    /* ── FINDINGS ── */
+    .findings-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .finding-item {
+      display: flex;
+      gap: 12px;
+      padding: 14px 16px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+    }
+
+    .finding-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+
+    .finding-content { flex: 1; }
+
+    .finding-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 3px;
+    }
+
+    .finding-desc {
+      font-size: 12.5px;
+      color: var(--text-secondary);
+      line-height: 1.55;
+    }
+
+    .finding-item.pass { border-color: rgba(22,163,74,0.2); background: #f0fdf4; }
+    .finding-item.warn { border-color: rgba(217,119,6,0.2); background: #fffbeb; }
+    .finding-item.fail { border-color: rgba(220,38,38,0.2); background: #fef2f2; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .sidebar { display: none; }
+      .main { margin-left: 0; padding: 24px 20px; }
+      .assessment-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ── STAGGER ANIMATION ── */
+    .component-card:nth-child(1) { animation-delay: 0.05s; }
+    .component-card:nth-child(2) { animation-delay: 0.10s; }
+    .component-card:nth-child(3) { animation-delay: 0.15s; }
+    .component-card:nth-child(4) { animation-delay: 0.20s; }
+    .component-card:nth-child(5) { animation-delay: 0.25s; }
+    .component-card:nth-child(6) { animation-delay: 0.30s; }
+
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<header class="topbar">
+  <a class="topbar-logo" href="#">
+    <div class="topbar-logo-mark">
+      <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M3 8C3 5.24 5.24 3 8 3s5 2.24 5 5-2.24 5-5 5-5-2.24-5-5z" fill="white" fill-opacity="0.3"/>
+        <path d="M8 5.5a2.5 2.5 0 100 5 2.5 2.5 0 000-5z" fill="white"/>
+      </svg>
+    </div>
+    <span class="topbar-logo-name">Frost One</span>
+    <span class="topbar-logo-version">v1.0</span>
+  </a>
+
+  <div class="topbar-search">
+    <svg class="topbar-search-icon" width="14" height="14" viewBox="0 0 16 16" fill="none">
+      <circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/>
+      <path d="M10 10l3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+    <input type="text" id="search-input" placeholder="Search components…" autocomplete="off" />
+  </div>
+
+  <div class="topbar-actions">
+    <button class="topbar-btn">Figma ↗</button>
+    <button class="topbar-btn">GitHub ↗</button>
+    <button class="topbar-btn primary">Assessment</button>
+  </div>
+</header>
+
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <nav class="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-label">Overview</div>
+      <a class="sidebar-item active" href="#" onclick="showGrid(); return false;">
+        <span class="dot"></span> All Components
+        <span class="sidebar-badge count">12</span>
+      </a>
+      <a class="sidebar-item" href="#">
+        <span class="dot"></span> Getting Started
+      </a>
+      <a class="sidebar-item" href="#">
+        <span class="dot"></span> Design Tokens
+      </a>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-label">Forms</div>
+      <a class="sidebar-item" href="#" onclick="showDetail(); return false;">
+        <span class="dot"></span> Checkbox
+        <span class="sidebar-badge new">New</span>
+      </a>
+      <a class="sidebar-item" href="#"><span class="dot"></span> Radio Button</a>
+      <a class="sidebar-item" href="#"><span class="dot"></span> Text Input</a>
+      <a class="sidebar-item" href="#"><span class="dot"></span> Select</a>
+      <a class="sidebar-item" href="#"><span class="dot"></span> Toggle</a>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-label">Actions</div>
+      <a class="sidebar-item" href="#"><span class="dot"></span> Button</a>
+      <a class="sidebar-item" href="#"><span class="dot"></span> Icon Button</a>
+      <a class="sidebar-item" href="#"><span class="dot"></span> Link</a>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-label">Navigation</div>
+      <a class="sidebar-item" href="#"><span class="dot"></span> Tab Bar</a>
+      <a class="sidebar-item" href="#"><span class="dot"></span> Breadcrumb</a>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-label">Feedback</div>
+      <a class="sidebar-item" href="#"><span class="dot"></span> Badge</a>
+      <a class="sidebar-item" href="#"><span class="dot"></span> Alert</a>
+      <a class="sidebar-item" href="#"><span class="dot"></span> Toast</a>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main class="main">
+
+    <!-- ── GRID VIEW ── -->
+    <div id="grid-view">
+      <div class="page-header">
+        <div class="page-header-eyebrow">Frost Design Group</div>
+        <h1>Component Library</h1>
+        <p>A reference catalog of reusable UI components used across all Frost products — assessed against industry standards for quality, accessibility, and cross-platform parity.</p>
+        <div class="page-header-meta">
+          <div class="meta-item">
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0a8 8 0 100 16A8 8 0 008 0zm.75 4.75v3.69l2.53 2.53-1.06 1.06-2.97-2.97V4.75h1.5z"/></svg>
+            <span>Last updated <strong>today</strong></span>
+          </div>
+          <div class="meta-item">
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm9 3H7V7h2v4zm0-5H7V4h2v2z"/></svg>
+            <span><strong>12</strong> components</span>
+          </div>
+          <div class="meta-item">
+            <span>●</span>
+            <span><strong>1</strong> assessed</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="filter-bar">
+        <button class="filter-btn active" onclick="filterCards('all', this)">All</button>
+        <button class="filter-btn" onclick="filterCards('forms', this)">Forms</button>
+        <button class="filter-btn" onclick="filterCards('actions', this)">Actions</button>
+        <button class="filter-btn" onclick="filterCards('navigation', this)">Navigation</button>
+        <button class="filter-btn" onclick="filterCards('feedback', this)">Feedback</button>
+        <button class="filter-btn" onclick="filterCards('assessed', this)">✓ Assessed</button>
+      </div>
+
+      <div class="component-grid" id="component-grid">
+
+        <!-- CHECKBOX CARD -->
+        <div class="component-card" data-category="forms" data-assessed="true" onclick="showDetail()">
+          <div class="card-preview">
+            <div class="card-preview-grid"></div>
+            <div class="card-preview-content">
+              <div style="display:flex; gap:20px; align-items:center;">
+                <div style="display:flex; flex-direction:column; gap:10px; align-items:center;">
+                  <div class="frost-checkbox medium"></div>
+                  <div class="frost-checkbox medium selected">
+                    <svg viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </div>
+                  <div class="frost-checkbox medium disabled"></div>
+                </div>
+                <div style="display:flex; flex-direction:column; gap:10px; align-items:center;">
+                  <div class="frost-checkbox small"></div>
+                  <div class="frost-checkbox small selected">
+                    <svg viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </div>
+                  <div class="frost-checkbox small selected disabled">
+                    <svg viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="card-header">
+              <span class="card-name">Checkbox</span>
+            </div>
+            <p class="card-description">Binary selection control with full state coverage — enabled, hovered, focused, and disabled. Supports small and medium sizes.</p>
+            <div class="card-tags">
+              <span class="tag tag-stable">Stable</span>
+              <span class="tag tag-new">Assessed</span>
+              <span class="tag tag-default">Forms</span>
+              <span class="tag tag-default">Atomic</span>
+              <span class="tag tag-default">16 variants</span>
+            </div>
+            <div class="card-footer">
+              <div class="card-score">
+                <div class="score-dots">
+                  <div class="score-dot pass"></div>
+                  <div class="score-dot pass"></div>
+                  <div class="score-dot warn"></div>
+                  <div class="score-dot fail"></div>
+                  <div class="score-dot fail"></div>
+                </div>
+                <span>Partial</span>
+              </div>
+              <span class="card-action">View assessment →</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- PLACEHOLDER CARDS -->
+        <div class="component-card" data-category="forms">
+          <div class="card-preview">
+            <div class="card-preview-grid"></div>
+            <div class="card-preview-content">
+              <div style="display:flex; gap:10px;">
+                <div style="width:16px;height:16px;border-radius:50%;border:1.5px solid #cbd5e1;"></div>
+                <div style="width:16px;height:16px;border-radius:50%;border:1.5px solid #2563eb;background:#2563eb;display:flex;align-items:center;justify-content:center;">
+                  <div style="width:6px;height:6px;border-radius:50%;background:white;"></div>
+                </div>
+                <div style="width:16px;height:16px;border-radius:50%;border:1.5px solid #e5e7eb;opacity:0.5;"></div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="card-header"><span class="card-name">Radio Button</span></div>
+            <p class="card-description">Single selection from a set of mutually exclusive options.</p>
+            <div class="card-tags">
+              <span class="tag tag-default">Forms</span>
+              <span class="tag tag-default">Atomic</span>
+            </div>
+            <div class="card-footer">
+              <div class="card-score">
+                <div class="score-dots">
+                  <div class="score-dot empty"></div>
+                  <div class="score-dot empty"></div>
+                  <div class="score-dot empty"></div>
+                  <div class="score-dot empty"></div>
+                  <div class="score-dot empty"></div>
+                </div>
+                <span>Not assessed</span>
+              </div>
+              <span class="card-action" style="color:var(--text-tertiary)">Coming soon</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="component-card" data-category="forms">
+          <div class="card-preview">
+            <div class="card-preview-grid"></div>
+            <div class="card-preview-content">
+              <div style="width:180px;height:36px;border-radius:8px;border:1.5px solid #cbd5e1;background:white;display:flex;align-items:center;padding:0 12px;">
+                <span style="font-size:12px;color:#aeaeb2;">Placeholder text</span>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="card-header"><span class="card-name">Text Input</span></div>
+            <p class="card-description">Single-line text entry with label, helper text, and error states.</p>
+            <div class="card-tags">
+              <span class="tag tag-default">Forms</span>
+              <span class="tag tag-default">Molecular</span>
+            </div>
+            <div class="card-footer">
+              <div class="card-score">
+                <div class="score-dots">
+                  <div class="score-dot empty"></div>
+                  <div class="score-dot empty"></div>
+                  <div class="score-dot empty"></div>
+                  <div class="score-dot empty"></div>
+                  <div class="score-dot empty"></div>
+                </div>
+                <span>Not assessed</span>
+              </div>
+              <span class="card-action" style="color:var(--text-tertiary)">Coming soon</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="component-card" data-category="actions">
+          <div class="card-preview">
+            <div class="card-preview-grid"></div>
+            <div class="card-preview-content">
+              <div style="display:flex;gap:10px;">
+                <div style="height:36px;padding:0 20px;background:#2563eb;border-radius:8px;display:flex;align-items:center;font-size:13px;font-weight:500;color:white;">Primary</div>
+                <div style="height:36px;padding:0 20px;background:transparent;border:1.5px solid #cbd5e1;border-radius:8px;display:flex;align-items:center;font-size:13px;font-weight:500;color:#1d1d1f;">Secondary</div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="card-header"><span class="card-name">Button</span></div>
+            <p class="card-description">Actionable element with primary, secondary, and destructive variants.</p>
+            <div class="card-tags">
+              <span class="tag tag-default">Actions</span>
+              <span class="tag tag-default">Atomic</span>
+            </div>
+            <div class="card-footer">
+              <div class="card-score">
+                <div class="score-dots">
+                  <div class="score-dot empty"></div>
+                  <div class="score-dot empty"></div>
+                  <div class="score-dot empty"></div>
+                  <div class="score-dot empty"></div>
+                  <div class="score-dot empty"></div>
+                </div>
+                <span>Not assessed</span>
+              </div>
+              <span class="card-action" style="color:var(--text-tertiary)">Coming soon</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="component-card" data-category="actions">
+          <div class="card-preview">
+            <div class="card-preview-grid"></div>
+            <div class="card-preview-content">
+              <div style="display:flex;align-items:center;gap:6px;font-size:13px;color:#2563eb;font-weight:500;">
+                <span>Learn more</span>
+                <span>→</span>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="card-header"><span class="card-name">Link</span></div>
+            <p class="card-description">Inline navigational element with underline and color treatments.</p>
+            <div class="card-tags">
+              <span class="tag tag-default">Actions</span>
+              <span class="tag tag-default">Atomic</span>
+            </div>
+            <div class="card-footer">
+              <div class="card-score">
+                <div class="score-dots">
+                  <div class="score-dot empty"></div>
+                  <div class="score-dot empty"></div>
+                  <div class="score-dot empty"></div>
+                  <div class="score-dot empty"></div>
+                  <div class="score-dot empty"></div>
+                </div>
+                <span>Not assessed</span>
+              </div>
+              <span class="card-action" style="color:var(--text-tertiary)">Coming soon</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="component-card" data-category="feedback">
+          <div class="card-preview">
+            <div class="card-preview-grid"></div>
+            <div class="card-preview-content">
+              <div style="display:flex;gap:8px;">
+                <span style="font-size:11px;font-weight:600;padding:3px 9px;border-radius:100px;background:#eff6ff;color:#2563eb;">New</span>
+                <span style="font-size:11px;font-weight:600;padding:3px 9px;border-radius:100px;background:#f0fdf4;color:#16a34a;">Stable</span>
+                <span style="font-size:11px;font-weight:600;padding:3px 9px;border-radius:100px;background:#fff7ed;color:#ea580c;">Deprecated</span>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="card-header"><span class="card-name">Badge</span></div>
+            <p class="card-description">Status indicators and labels for categorization and state communication.</p>
+            <div class="card-tags">
+              <span class="tag tag-default">Feedback</span>
+              <span class="tag tag-default">Atomic</span>
+            </div>
+            <div class="card-footer">
+              <div class="card-score">
+                <div class="score-dots">
+                  <div class="score-dot empty"></div>
+                  <div class="score-dot empty"></div>
+                  <div class="score-dot empty"></div>
+                  <div class="score-dot empty"></div>
+                  <div class="score-dot empty"></div>
+                </div>
+                <span>Not assessed</span>
+              </div>
+              <span class="card-action" style="color:var(--text-tertiary)">Coming soon</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── DETAIL VIEW ── -->
+    <div id="detail-view" class="detail-view">
+      <a class="detail-back" href="#" onclick="showGrid(); return false;">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        All Components
+      </a>
+
+      <div class="detail-header">
+        <div class="detail-header-left">
+          <h1>Checkbox</h1>
+          <p>Binary selection control for forms, lists, and settings. Atomic component — does not include label or validation.</p>
+          <div class="detail-meta">
+            <div class="detail-meta-chip">
+              <svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0a8 8 0 100 16A8 8 0 008 0zM4.5 7.5h5a.5.5 0 010 1h-5a.5.5 0 010-1z"/></svg>
+              Frost One v1.0
+            </div>
+            <div class="detail-meta-chip">
+              <svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor"><path d="M1 3a2 2 0 012-2h10a2 2 0 012 2v10a2 2 0 01-2 2H3a2 2 0 01-2-2V3zm2 0v10h10V3H3z"/></svg>
+              Figma · node 55:413
+            </div>
+            <div class="detail-meta-chip">Atomic · Forms</div>
+            <div class="detail-meta-chip">16 variants</div>
+          </div>
+        </div>
+        <div style="display:flex; gap:8px;">
+          <span class="tag tag-stable" style="padding:5px 14px; font-size:12px;">Stable</span>
+          <span class="tag tag-partial" style="padding:5px 14px; font-size:12px;">Partial Pass</span>
+        </div>
+      </div>
+
+      <!-- LIVE PREVIEW -->
+      <div class="preview-section">
+        <div class="preview-header">
+          <span class="preview-title">Live Preview</span>
+          <div class="preview-controls">
+            <button class="preview-control-btn active">All States</button>
+            <button class="preview-control-btn">Small</button>
+            <button class="preview-control-btn">Medium</button>
+          </div>
+        </div>
+        <div class="preview-canvas">
+          <div class="preview-states">
+            <div class="preview-state-group">
+              <span class="preview-state-label">Enabled</span>
+              <div class="preview-checkboxes">
+                <div class="frost-checkbox medium"></div>
+                <div class="frost-checkbox small"></div>
+              </div>
+            </div>
+            <div class="preview-state-group">
+              <span class="preview-state-label">Selected</span>
+              <div class="preview-checkboxes">
+                <div class="frost-checkbox medium selected">
+                  <svg viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <div class="frost-checkbox small selected">
+                  <svg viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+              </div>
+            </div>
+            <div class="preview-state-group">
+              <span class="preview-state-label">Hovered</span>
+              <div class="preview-checkboxes">
+                <div class="frost-checkbox medium hovered"></div>
+                <div class="frost-checkbox medium selected hovered">
+                  <svg viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+              </div>
+            </div>
+            <div class="preview-state-group">
+              <span class="preview-state-label">Focused</span>
+              <div class="preview-checkboxes">
+                <div class="frost-checkbox medium focused"></div>
+                <div class="frost-checkbox medium selected focused">
+                  <svg viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+              </div>
+            </div>
+            <div class="preview-state-group">
+              <span class="preview-state-label">Disabled</span>
+              <div class="preview-checkboxes">
+                <div class="frost-checkbox medium disabled"></div>
+                <div class="frost-checkbox medium selected disabled">
+                  <svg viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCORE SUMMARY -->
+      <div class="score-summary">
+        <div class="score-summary-title">Assessment Overview</div>
+        <div class="score-bars">
+          <div class="score-bar-row">
+            <span class="score-bar-label">Single Responsibility</span>
+            <div class="score-bar-track"><div class="score-bar-fill pass" style="width:90%"></div></div>
+            <span class="score-bar-value" style="color:var(--pass)">90%</span>
+          </div>
+          <div class="score-bar-row">
+            <span class="score-bar-label">Variant Coverage</span>
+            <div class="score-bar-track"><div class="score-bar-fill warn" style="width:65%"></div></div>
+            <span class="score-bar-value" style="color:var(--warn)">65%</span>
+          </div>
+          <div class="score-bar-row">
+            <span class="score-bar-label">API Design</span>
+            <div class="score-bar-track"><div class="score-bar-fill warn" style="width:55%"></div></div>
+            <span class="score-bar-value" style="color:var(--warn)">55%</span>
+          </div>
+          <div class="score-bar-row">
+            <span class="score-bar-label">Token Usage</span>
+            <div class="score-bar-track"><div class="score-bar-fill fail" style="width:20%"></div></div>
+            <span class="score-bar-value" style="color:var(--fail)">20%</span>
+          </div>
+          <div class="score-bar-row">
+            <span class="score-bar-label">Accessibility</span>
+            <div class="score-bar-track"><div class="score-bar-fill fail" style="width:35%"></div></div>
+            <span class="score-bar-value" style="color:var(--fail)">35%</span>
+          </div>
+          <div class="score-bar-row">
+            <span class="score-bar-label">Code Connect Ready</span>
+            <div class="score-bar-track"><div class="score-bar-fill warn" style="width:60%"></div></div>
+            <span class="score-bar-value" style="color:var(--warn)">60%</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ASSESSMENT GRID -->
+      <div class="assessment-grid">
+
+        <!-- SINGLE RESPONSIBILITY -->
+        <div class="assessment-section">
+          <div class="assessment-section-header">
+            <div class="assessment-section-title">
+              <span class="section-number">1</span> Single Responsibility
+            </div>
+            <span class="status-pill pass">Pass</span>
+          </div>
+          <div class="assessment-section-body">
+            <div class="assessment-row">
+              <span class="assessment-icon">✅</span>
+              <div class="assessment-row-label">
+                <strong>One job: binary selection state</strong>
+                Communicates checked/unchecked across interaction states.
+              </div>
+            </div>
+            <div class="assessment-row">
+              <span class="assessment-icon">✅</span>
+              <div class="assessment-row-label">
+                <strong>Correctly excludes label & validation</strong>
+                Label belongs to CheckboxItem (molecular).
+              </div>
+            </div>
+            <div class="assessment-row">
+              <span class="assessment-icon">🚩</span>
+              <div class="assessment-row-label">
+                <strong>Missing indeterminate state</strong>
+                A select-all pattern requires a third state within its responsibility.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ABSTRACTION LEVEL -->
+        <div class="assessment-section">
+          <div class="assessment-section-header">
+            <div class="assessment-section-title">
+              <span class="section-number">2</span> Abstraction Level
+            </div>
+            <span class="status-pill pass">Pass</span>
+          </div>
+          <div class="assessment-section-body">
+            <div class="assessment-row">
+              <span class="assessment-icon">✅</span>
+              <div class="assessment-row-label">
+                <strong>Correctly atomic</strong>
+                No component children — pure visual state machine.
+              </div>
+            </div>
+            <div class="assessment-row">
+              <span class="assessment-icon">✅</span>
+              <div class="assessment-row-label">
+                <strong>CheckboxItem is molecular</strong>
+                Correct separation between atom and molecule.
+              </div>
+            </div>
+            <div class="assessment-row">
+              <span class="assessment-icon">⚠️</span>
+              <div class="assessment-row-label">
+                <strong>CheckboxGroup not defined</strong>
+                Group pattern needed for multi-select form use cases.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- VARIANT COVERAGE -->
+        <div class="assessment-section">
+          <div class="assessment-section-header">
+            <div class="assessment-section-title">
+              <span class="section-number">3</span> Variant &amp; State Coverage
+            </div>
+            <span class="status-pill partial">Partial</span>
+          </div>
+          <div class="assessment-section-body">
+            <table class="variant-table">
+              <thead>
+                <tr>
+                  <th>State</th>
+                  <th>Small</th>
+                  <th>Medium</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Enabled (Unselected)</td><td>✅</td><td>✅</td><td><span class="status-pill pass">Pass</span></td></tr>
+                <tr><td>Enabled (Selected)</td><td>✅</td><td>✅</td><td><span class="status-pill pass">Pass</span></td></tr>
+                <tr><td>Hovered</td><td>✅</td><td>✅</td><td><span class="status-pill pass">Pass</span></td></tr>
+                <tr><td>Focused</td><td>✅</td><td>✅</td><td><span class="status-pill pass">Pass</span></td></tr>
+                <tr><td>Disabled</td><td>✅</td><td>✅</td><td><span class="status-pill pass">Pass</span></td></tr>
+                <tr><td>Pressed</td><td>🚩</td><td>🚩</td><td><span class="status-pill fail">Missing</span></td></tr>
+                <tr><td>Indeterminate</td><td>🚩</td><td>🚩</td><td><span class="status-pill fail">Missing</span></td></tr>
+                <tr><td>Error</td><td>🚩</td><td>🚩</td><td><span class="status-pill fail">Missing</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- TOKEN USAGE -->
+        <div class="assessment-section">
+          <div class="assessment-section-header">
+            <div class="assessment-section-title">
+              <span class="section-number">4</span> Token Usage
+            </div>
+            <span class="status-pill fail">Fail</span>
+          </div>
+          <div class="assessment-section-body">
+            <div class="assessment-row">
+              <span class="assessment-icon">🚩</span>
+              <div class="assessment-row-label">
+                <strong>Fill hardcoded: <code>#2563eb</code></strong>
+                Should reference <code>checkbox.fill.selected</code>
+              </div>
+            </div>
+            <div class="assessment-row">
+              <span class="assessment-icon">🚩</span>
+              <div class="assessment-row-label">
+                <strong>Border hardcoded: <code>#cbd5e1</code></strong>
+                Should reference <code>checkbox.border.default</code>
+              </div>
+            </div>
+            <div class="assessment-row">
+              <span class="assessment-icon">🚩</span>
+              <div class="assessment-row-label">
+                <strong>Disabled color hardcoded: <code>#bfdbfe</code></strong>
+                Should use opacity token on base fill color.
+              </div>
+            </div>
+            <div class="assessment-row">
+              <span class="assessment-icon">🚩</span>
+              <div class="assessment-row-label">
+                <strong>Corner radius hardcoded: <code>2px</code></strong>
+                Should reference <code>radius.checkbox</code>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ACCESSIBILITY -->
+        <div class="assessment-section">
+          <div class="assessment-section-header">
+            <div class="assessment-section-title">
+              <span class="section-number">5</span> Accessibility
+            </div>
+            <span class="status-pill fail">Fail</span>
+          </div>
+          <div class="assessment-section-body">
+            <div class="assessment-row">
+              <span class="assessment-icon">🚩</span>
+              <div class="assessment-row-label">
+                <strong>Touch target too small</strong>
+                Small (12px) &amp; Medium (16px) are below 44pt / 48dp minimum.
+              </div>
+            </div>
+            <div class="assessment-row">
+              <span class="assessment-icon">🚩</span>
+              <div class="assessment-row-label">
+                <strong>No accessibilityLabel defined</strong>
+                Screen reader cannot describe the checkbox without a label.
+              </div>
+            </div>
+            <div class="assessment-row">
+              <span class="assessment-icon">🚩</span>
+              <div class="assessment-row-label">
+                <strong>State announcement not documented</strong>
+                No spec for VoiceOver / TalkBack state announcements.
+              </div>
+            </div>
+            <div class="assessment-row">
+              <span class="assessment-icon">❓</span>
+              <div class="assessment-row-label">
+                <strong>Color contrast not audited</strong>
+                Focused ring and disabled states need WCAG 3:1 verification.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- API SURFACE -->
+        <div class="assessment-section">
+          <div class="assessment-section-header">
+            <div class="assessment-section-title">
+              <span class="section-number">6</span> API Surface
+            </div>
+            <span class="status-pill partial">Partial</span>
+          </div>
+          <div class="assessment-section-body">
+            <div class="assessment-row">
+              <span class="assessment-icon">✅</span>
+              <div class="assessment-row-label">
+                <strong>Type → isSelected: Boolean</strong>
+                Clean 2-value variant maps to Boolean.
+              </div>
+            </div>
+            <div class="assessment-row">
+              <span class="assessment-icon">✅</span>
+              <div class="assessment-row-label">
+                <strong>State → CheckboxState enum</strong>
+                4 values map cleanly to sealed class / enum.
+              </div>
+            </div>
+            <div class="assessment-row">
+              <span class="assessment-icon">✅</span>
+              <div class="assessment-row-label">
+                <strong>Size → CheckboxSize enum</strong>
+                Small / Medium map to typed enum.
+              </div>
+            </div>
+            <div class="assessment-row">
+              <span class="assessment-icon">🚩</span>
+              <div class="assessment-row-label">
+                <strong>onToggle not documented</strong>
+                Required callback has no Figma spec counterpart.
+              </div>
+            </div>
+            <div class="assessment-row">
+              <span class="assessment-icon">🚩</span>
+              <div class="assessment-row-label">
+                <strong>accessibilityLabel not defined</strong>
+                Required prop missing from component definition.
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- API SNIPPET -->
+      <div style="margin-bottom:32px;">
+        <div style="font-size:14px;font-weight:600;margin-bottom:14px;color:var(--text-primary);">Minimum API Contract</div>
+        <div class="api-block">
+          <div class="api-block-header">
+            <span class="api-block-lang">Kotlin · Compose</span>
+            <button class="api-block-copy" onclick="copyCode(this)">Copy</button>
+          </div>
+          <pre><span class="syn-comment">// Frost One — Checkbox · Minimum Shared API</span>
+<span class="syn-keyword">@Composable</span>
+<span class="syn-keyword">fun</span> <span class="syn-function">FrostCheckbox</span>(
+    <span class="syn-comment">// ── Required ──────────────────────────────────</span>
+    isSelected: <span class="syn-type">Boolean</span>,
+    onToggle: (<span class="syn-type">Boolean</span>) -> <span class="syn-type">Unit</span>,
+    accessibilityLabel: <span class="syn-type">String</span>,
+
+    <span class="syn-comment">// ── Optional ──────────────────────────────────</span>
+    state: <span class="syn-type">CheckboxState</span> = CheckboxState.<span class="syn-function">Enabled</span>,
+    isIndeterminate: <span class="syn-type">Boolean</span> = <span class="syn-number">false</span>,
+    size: <span class="syn-type">CheckboxSize</span> = CheckboxSize.<span class="syn-function">Medium</span>,
+    accessibilityHint: <span class="syn-type">String</span>? = <span class="syn-number">null</span>,
+    modifier: <span class="syn-type">Modifier</span> = Modifier
+) { <span class="syn-comment">/* ... */</span> }</pre>
+        </div>
+        <div class="api-block">
+          <div class="api-block-header">
+            <span class="api-block-lang">Swift · SwiftUI</span>
+            <button class="api-block-copy" onclick="copyCode(this)">Copy</button>
+          </div>
+          <pre><span class="syn-comment">// Frost One — Checkbox · SwiftUI</span>
+<span class="syn-keyword">struct</span> <span class="syn-type">FrostCheckbox</span>: <span class="syn-type">View</span> {
+    <span class="syn-comment">// ── Required ──────────────────────────────────</span>
+    <span class="syn-keyword">@Binding var</span> isSelected: <span class="syn-type">Bool</span>
+    <span class="syn-keyword">let</span> accessibilityLabel: <span class="syn-type">String</span>
+    <span class="syn-keyword">let</span> onToggle: (<span class="syn-type">Bool</span>) -> <span class="syn-type">Void</span>
+
+    <span class="syn-comment">// ── Optional ──────────────────────────────────</span>
+    <span class="syn-keyword">var</span> state: <span class="syn-type">CheckboxState</span> = .<span class="syn-function">enabled</span>
+    <span class="syn-keyword">var</span> isIndeterminate: <span class="syn-type">Bool</span> = <span class="syn-number">false</span>
+    <span class="syn-keyword">var</span> size: <span class="syn-type">CheckboxSize</span> = .<span class="syn-function">medium</span>
+    <span class="syn-keyword">var</span> accessibilityHint: <span class="syn-type">String</span>? = <span class="syn-number">nil</span>
+}</pre>
+        </div>
+      </div>
+
+      <!-- KEY FINDINGS -->
+      <div>
+        <div style="font-size:14px;font-weight:600;margin-bottom:14px;color:var(--text-primary);">Key Findings &amp; Recommendations</div>
+        <div class="findings-list">
+          <div class="finding-item pass">
+            <span class="finding-icon">✅</span>
+            <div class="finding-content">
+              <div class="finding-title">Solid variant structure — 16 variants, clean naming</div>
+              <div class="finding-desc">The Property=Value convention is consistent and maps directly to Code Connect. Type, State, and Size properties are correctly ordered by usage frequency.</div>
+            </div>
+          </div>
+          <div class="finding-item fail">
+            <span class="finding-icon">🚩</span>
+            <div class="finding-content">
+              <div class="finding-title">All color values are hardcoded — tokenize immediately</div>
+              <div class="finding-desc">Fill (#2563eb), border (#cbd5e1), disabled (#bfdbfe), and corner radius (2px) are all hardcoded. Replace with checkbox.fill.selected, checkbox.border.default, and radius.checkbox tokens before dark mode or theming work begins.</div>
+            </div>
+          </div>
+          <div class="finding-item fail">
+            <span class="finding-icon">🚩</span>
+            <div class="finding-content">
+              <div class="finding-title">Touch target is below platform minimums on both sizes</div>
+              <div class="finding-desc">Small (12px) and Medium (16px) are far below iOS 44pt and Android 48dp minimums. Add an invisible 44×44 hit area layer in Figma and document in the component spec.</div>
+            </div>
+          </div>
+          <div class="finding-item warn">
+            <span class="finding-icon">⚠️</span>
+            <div class="finding-content">
+              <div class="finding-title">Pressed, Indeterminate, and Error states are missing</div>
+              <div class="finding-desc">Priority order: Pressed (UX gap) → Indeterminate (select-all pattern) → Error (form validation). Each is a minor version bump (additive).</div>
+            </div>
+          </div>
+          <div class="finding-item fail">
+            <span class="finding-icon">🚩</span>
+            <div class="finding-content">
+              <div class="finding-title">No accessibility spec — VoiceOver and TalkBack announcements undefined</div>
+              <div class="finding-desc">accessibilityLabel is a required prop with no Figma counterpart. Add a component spec annotation defining role ("Checkbox"), value announcement ("Checked"/"Unchecked"), and disabled behavior.</div>
+            </div>
+          </div>
+          <div class="finding-item pass">
+            <span class="finding-icon">✅</span>
+            <div class="finding-content">
+              <div class="finding-title">Code Connect mapping is 75% ready</div>
+              <div class="finding-desc">Type, State, and Size properties map cleanly to Boolean and enums. Only missing: Indeterminate variant and accessibility annotations to complete the Code Connect file.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end detail-view -->
+
+  </main>
+</div>
+
+<script>
+  // ── VIEW SWITCHING ──
+  function showGrid() {
+    document.getElementById('grid-view').style.display = '';
+    document.getElementById('detail-view').classList.remove('visible');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function showDetail() {
+    document.getElementById('grid-view').style.display = 'none';
+    document.getElementById('detail-view').classList.add('visible');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Animate score bars
+    setTimeout(() => {
+      document.querySelectorAll('.score-bar-fill').forEach(bar => {
+        const w = bar.style.width;
+        bar.style.width = '0%';
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => { bar.style.width = w; });
+        });
+      });
+    }, 100);
+  }
+
+  // ── SEARCH ──
+  document.getElementById('search-input').addEventListener('input', function () {
+    const q = this.value.toLowerCase().trim();
+    document.querySelectorAll('.component-card').forEach(card => {
+      const text = card.textContent.toLowerCase();
+      const match = !q || text.includes(q);
+      card.style.opacity = match ? '1' : '0.25';
+      card.style.pointerEvents = match ? '' : 'none';
+    });
+  });
+
+  // ── FILTER ──
+  function filterCards(category, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.component-card').forEach(card => {
+      const cat = card.dataset.category;
+      const assessed = card.dataset.assessed === 'true';
+      let show = category === 'all'
+        || (category === 'assessed' && assessed)
+        || cat === category;
+      card.style.display = show ? '' : 'none';
+    });
+  }
+
+  // ── COPY CODE ──
+  function copyCode(btn) {
+    const pre = btn.closest('.api-block').querySelector('pre');
+    navigator.clipboard.writeText(pre.innerText).then(() => {
+      btn.textContent = 'Copied!';
+      setTimeout(() => btn.textContent = 'Copy', 2000);
+    });
+  }
+
+  // ── SIDEBAR ACTIVE STATE ──
+  document.querySelectorAll('.sidebar-item').forEach(item => {
+    item.addEventListener('click', function () {
+      document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
