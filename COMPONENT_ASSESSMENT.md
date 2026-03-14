@@ -21,6 +21,12 @@ A framework for evaluating the quality, completeness, and production-readiness o
 13. [Sensible Defaults](#13-sensible-defaults)
 14. [Accessibility Requirements](#14-accessibility-requirements)
 15. [Measuring Designer Effort Reduction](#15-measuring-designer-effort-reduction)
+16. [Component Scoring Framework](#component-scoring-framework)
+    - [Component Traits](#component-traits)
+    - [Findings](#findings)
+    - [Mobile & Web Readiness Criteria](#mobile--web-readiness-criteria)
+    - [Status Levels](#status-levels)
+    - [Combined Status](#combined-status)
 
 ---
 
@@ -711,6 +717,136 @@ Measure adoption + overrides (monthly)
       ├── Detach rate rising?                    → Roadmap fix
       ├── Adoption stalling?                     → Docs problem
       └── Time savings confirmed?                → Justify investment
+```
+
+---
+
+## Component Scoring Framework
+
+A structured scoring system used to produce a final verdict for every Frost One component. Every component is evaluated across two dimensions — **Component Traits** (design system health) and **Mobile & Web Readiness** (cross-platform implementation quality). Both must be completed.
+
+---
+
+### Component Traits
+
+Rate each trait as **Pass**, **Warn**, or **Fail**.
+
+> These four traits determine whether a component belongs in the design system at all — regardless of how it looks.
+
+| Trait | What to check |
+|---|---|
+| **Reusable** | Works across multiple contexts and flows — not tied to one screen, feature, or product area. |
+| **Self-contained** | Carries its own styles, states, and logic without relying on external or ad-hoc dependencies. |
+| **Consistent** | Predictable behavior. Naming, property types, variant structure, and state coverage align with Frost One conventions. |
+| **Composable** | Nests cleanly inside other components and fits the existing atomic/molecular/organism hierarchy. |
+
+#### Trait Rating Guide
+
+| Rating | Meaning |
+|---|---|
+| **Pass** | Fully meets the trait — no action needed |
+| **Warn** | Partially meets — specific issues to resolve |
+| **Fail** | Does not meet — blocks design system inclusion |
+
+---
+
+### Findings
+
+The overall DS verdict assigned after scoring all four Component Traits.
+
+| Finding | Meaning |
+|---|---|
+| **Keep** | All 4 traits pass. Ship as-is. |
+| **Fix** | Belongs in Frost One but has specific issues to resolve before shipping. |
+| **Restructure** | Needs significant property, naming, or architectural changes before it's DS-ready. |
+| **Consolidate** | Overlaps with another component — merge rather than maintain separately. |
+| **Product Layer** | Too feature-specific for the core DS — move to product library. |
+| **Remove** | Redundant, deprecated, or not a design system concern. |
+
+---
+
+### Mobile & Web Readiness Criteria
+
+Seven criteria that determine whether a component can be handed off cleanly to SwiftUI, Jetpack Compose, and web (React/HTML). The overall status is set by the **worst-scoring criterion**.
+
+| ID | Criterion | What to check |
+|----|---|---|
+| **C1** | **Layer Structure & Naming** | Semantic layer names (`leading-icon`, `label`, `container`) — not Figma defaults (`Frame 42`, `Group 7`). Logical hierarchy that maps to native view trees. |
+| **C2** | **Variant & Property Naming** | Booleans as `true`/`false`. Enums in consistent casing (hyphenated or camelCase). No version numbers, spaces, or ambiguous values in property names. |
+| **C3** | **Token Coverage** | All color, spacing, typography, radius, and opacity values bound to design tokens. Zero hardcoded values. |
+| **C4** | **Native Mappability** | Maps to a native primitive (`Toggle`, `Button`, `DisclosureGroup`, `List`, `Checkbox`). No web-only patterns that have no native equivalent. |
+| **C5** | **Interaction State Coverage** | All expected states exist as variants — default, pressed, focused, disabled, error, indeterminate (where applicable). |
+| **C6** | **Asset & Icon Quality** | Icons are vector component instances — not raster, PNG, or flattened. Color applied via tokens for native tinting support. |
+| **C7** | **Code Connect Linkability** | Proper component set structure. Property names map 1:1 to native parameters. Suitable for Code Connect registration without renaming. |
+
+#### Criterion Status
+
+| Status | Meaning |
+|---|---|
+| **Pass** | Clean — no action needed |
+| **Flag** | Minor issue — resolve before Code Connect linkage |
+| **Fail** | Blocking — must be fixed before native handoff |
+
+---
+
+### Status Levels
+
+The overall readiness status assigned after scoring all 7 criteria.
+
+| Status | Meaning |
+|---|---|
+| **Ready** | Linkable as-is. Clean structure, maps well to SwiftUI, Compose, and web. |
+| **Needs Refinement** | Minor issues to resolve before linking. Assign to DS team. |
+| **Requires Rework** | Needs redesign or restructure before native translation. |
+| **Not Applicable** | Web-only pattern, removed component, or non-interactive element — skip native assessment. |
+
+---
+
+### Combined Status
+
+The intersection of Component Traits (Finding) and Mobile & Web Readiness (Status Level) determines the overall action.
+
+| Finding | Status Level | Action |
+|---|---|---|
+| **Keep** | Ready | ✅ Ship it. No action required. |
+| **Keep / Fix** | Needs Refinement | Minor fixes — assign to DS team before handoff. |
+| **Fix / Restructure** | Requires Rework | Significant work needed before native handoff. |
+| **Consolidate** | Not Applicable | Merge into target component first, then re-assess. |
+| **Product Layer** | Not Applicable | Move to product library. Skip native assessment. |
+| **Remove** | Not Applicable | Deprecate and remove. No native assessment needed. |
+
+---
+
+### Scoring Scorecard Template
+
+Use this table for every component assessment:
+
+```
+Component: [Name]
+Node ID:   [Figma node ID]
+Variants:  [count]
+
+── COMPONENT TRAITS ──────────────────────────────────
+Reusable       [ Pass / Warn / Fail ]  [note]
+Self-contained [ Pass / Warn / Fail ]  [note]
+Consistent     [ Pass / Warn / Fail ]  [note]
+Composable     [ Pass / Warn / Fail ]  [note]
+
+Finding: [ Keep / Fix / Restructure / Consolidate / Product Layer / Remove ]
+
+── MOBILE & WEB READINESS ────────────────────────────
+C1 Layer Structure      [ Pass / Flag / Fail ]  [note]
+C2 Variant Naming       [ Pass / Flag / Fail ]  [note]
+C3 Token Coverage       [ Pass / Flag / Fail ]  [note]
+C4 Native Mappability   [ Pass / Flag / Fail ]  [note]
+C5 Interaction States   [ Pass / Flag / Fail ]  [note]
+C6 Asset Quality        [ Pass / Flag / Fail ]  [note]
+C7 Code Connect         [ Pass / Flag / Fail ]  [note]
+
+Status Level: [ Ready / Needs Refinement / Requires Rework / Not Applicable ]
+
+── COMBINED STATUS ───────────────────────────────────
+[Finding] + [Status Level] → [Action]
 ```
 
 ---
