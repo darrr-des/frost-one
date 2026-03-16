@@ -672,18 +672,14 @@
       border-color: #1d4ed8;
     }
 
-    .frost-checkbox.focused,
-    .frost-checkbox:focus-visible,
-    .frost-checkbox:focus {
+    .frost-checkbox.focused {
       background: #f8fafc;
       border-color: #cbd5e1;
       box-shadow: 0 0 0 6px #dbe8ff;
       outline: none;
     }
 
-    .frost-checkbox.selected.focused,
-    .frost-checkbox.selected:focus-visible,
-    .frost-checkbox.selected:focus {
+    .frost-checkbox.selected.focused {
       background: #2563eb;
       border-color: #2563eb;
       box-shadow: 0 0 0 6px #dbe8ff;
@@ -1862,6 +1858,7 @@
     const cb = document.getElementById('live-checkbox');
     const label = document.getElementById('live-checkbox-text');
     const isSelected = cb.classList.toggle('selected');
+    cb.classList.add('focused');
     cb.setAttribute('aria-checked', isSelected);
     label.textContent = isSelected ? 'Checked' : 'Unchecked';
     cb.focus();
@@ -1875,6 +1872,9 @@
           e.preventDefault();
           toggleLiveCheckbox(e);
         }
+      });
+      cb.addEventListener('blur', function() {
+        cb.classList.remove('focused');
       });
     }
   });
