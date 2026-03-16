@@ -673,7 +673,8 @@
     }
 
     .frost-checkbox.focused,
-    .frost-checkbox:focus-visible {
+    .frost-checkbox:focus-visible,
+    .frost-checkbox:focus {
       background: #f8fafc;
       border-color: #cbd5e1;
       box-shadow: 0 0 0 3px rgba(37,99,235,0.2);
@@ -681,7 +682,8 @@
     }
 
     .frost-checkbox.selected.focused,
-    .frost-checkbox.selected:focus-visible {
+    .frost-checkbox.selected:focus-visible,
+    .frost-checkbox.selected:focus {
       background: #1d4ed8;
       border-color: #1d4ed8;
       box-shadow: 0 0 0 3px rgba(37,99,235,0.2);
@@ -1856,13 +1858,26 @@
 <script>
   // ── LIVE CHECKBOX PREVIEW ──
   function toggleLiveCheckbox(e) {
-    e.preventDefault();
+    e.stopPropagation();
     const cb = document.getElementById('live-checkbox');
     const label = document.getElementById('live-checkbox-text');
     const isSelected = cb.classList.toggle('selected');
     cb.setAttribute('aria-checked', isSelected);
     label.textContent = isSelected ? 'Checked' : 'Unchecked';
+    cb.focus();
   }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const cb = document.getElementById('live-checkbox');
+    if (cb) {
+      cb.addEventListener('keydown', function(e) {
+        if (e.key === ' ' || e.key === 'Enter') {
+          e.preventDefault();
+          toggleLiveCheckbox(e);
+        }
+      });
+    }
+  });
 
   function switchPreviewSize(size, btn) {
     const cb = document.getElementById('live-checkbox');
