@@ -706,6 +706,58 @@
 
     .frost-checkbox.small svg { width: 8px; height: 8px; }
 
+    /* ── RADIO BUTTON ── */
+    .frost-radio {
+      width: 16px; height: 16px;
+      border-radius: 50%;
+      border: 1.5px solid #cbd5e1;
+      background: transparent;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      flex-shrink: 0;
+    }
+    .frost-radio.small { width: 12px; height: 12px; }
+    .frost-radio.medium { width: 16px; height: 16px; }
+    .frost-radio .frost-radio-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: white;
+      opacity: 0;
+      transform: scale(0.5);
+      transition: all 0.15s ease;
+    }
+    .frost-radio.small .frost-radio-dot { width: 5px; height: 5px; }
+    .frost-radio.selected {
+      background: #2563eb;
+      border-color: #2563eb;
+    }
+    .frost-radio.selected .frost-radio-dot {
+      opacity: 1;
+      transform: scale(1);
+    }
+    .frost-radio:hover:not(.disabled) {
+      background: #f8fafc;
+      border-color: #cbd5e1;
+    }
+    .frost-radio.selected:hover:not(.disabled) {
+      background: #1d4ed8;
+      border-color: #1d4ed8;
+    }
+    .frost-radio.focused {
+      box-shadow: 0 0 0 6px #dbe8ff;
+      outline: none;
+    }
+    .frost-radio.disabled {
+      border-color: #e5e7eb;
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+    .frost-radio.selected.disabled {
+      background: #bfdbfe;
+      border-color: transparent;
+    }
+
     .frost-checkbox.selected svg {
       opacity: 1;
       transform: scale(1);
@@ -1247,7 +1299,7 @@
       <div class="sidebar-label">Overview</div>
       <a class="sidebar-item active" href="#" onclick="showGrid(); return false;">
         <span class="dot"></span> All Components
-        <span class="sidebar-badge count">1</span>
+        <span class="sidebar-badge count">2</span>
       </a>
       <a class="sidebar-item" href="#">
         <span class="dot"></span> Getting Started
@@ -1259,8 +1311,12 @@
 
     <div class="sidebar-section">
       <div class="sidebar-label">Forms</div>
-      <a class="sidebar-item" href="#" onclick="showDetail(); return false;">
+      <a class="sidebar-item" href="#" onclick="showDetail('checkbox'); return false;">
         <span class="dot"></span> Checkbox
+        <span class="sidebar-badge new">Assessed</span>
+      </a>
+      <a class="sidebar-item" href="#" onclick="showDetail('radio'); return false;">
+        <span class="dot"></span> Radio Button
         <span class="sidebar-badge new">Assessed</span>
       </a>
     </div>
@@ -1282,11 +1338,11 @@
           </div>
           <div class="meta-item">
             <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm9 3H7V7h2v4zm0-5H7V4h2v2z"/></svg>
-            <span><strong>1</strong> component</span>
+            <span><strong>2</strong> components</span>
           </div>
           <div class="meta-item">
             <span>●</span>
-            <span><strong>1</strong> assessed</span>
+            <span><strong>2</strong> assessed</span>
           </div>
         </div>
       </div>
@@ -1303,7 +1359,7 @@
       <div class="component-grid" id="component-grid">
 
         <!-- CHECKBOX CARD -->
-        <div class="component-card" data-category="forms" data-assessed="true" onclick="showDetail()">
+        <div class="component-card" data-category="forms" data-assessed="true" onclick="showDetail('checkbox')">
           <div class="card-preview">
             <div class="card-preview-grid"></div>
             <div class="card-preview-content">
@@ -1346,11 +1402,48 @@
         </div>
 
 
+        <!-- RADIO BUTTON CARD -->
+        <div class="component-card" data-category="forms" data-assessed="true" onclick="showDetail('radio')">
+          <div class="card-preview">
+            <div class="card-preview-grid"></div>
+            <div class="card-preview-content">
+              <div style="display:flex; gap:20px; align-items:center;">
+                <div style="display:flex; flex-direction:column; gap:10px; align-items:center;">
+                  <div class="frost-radio medium"></div>
+                  <div class="frost-radio medium selected"><div class="frost-radio-dot"></div></div>
+                  <div class="frost-radio medium disabled"></div>
+                </div>
+                <div style="display:flex; flex-direction:column; gap:10px; align-items:center;">
+                  <div class="frost-radio small"></div>
+                  <div class="frost-radio small selected"><div class="frost-radio-dot"></div></div>
+                  <div class="frost-radio small selected disabled"><div class="frost-radio-dot"></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="card-header">
+              <span class="card-name">Radio Button</span>
+            </div>
+            <p class="card-description">Single selection control for mutually exclusive options. Supports enabled, hovered, focused, and disabled states in small and medium sizes.</p>
+            <div class="card-tags">
+              <span class="tag tag-stable">Stable</span>
+              <span class="tag tag-new">Assessed</span>
+              <span class="tag tag-default">Forms</span>
+              <span class="tag tag-default">Atomic</span>
+              <span class="tag tag-default">16 variants</span>
+            </div>
+            <div class="card-footer">
+              <span class="card-action">View assessment →</span>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
 
-    <!-- ── DETAIL VIEW ── -->
-    <div id="detail-view" class="detail-view">
+    <!-- ── CHECKBOX DETAIL VIEW ── -->
+    <div id="detail-view" class="detail-view" data-component="checkbox">
       <a class="detail-back" href="#" onclick="showGrid(); return false;">
         <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         All Components
@@ -1846,7 +1939,420 @@
         </div>
       </div>
 
-    </div><!-- end detail-view -->
+    </div><!-- end checkbox detail-view -->
+
+    <!-- ── RADIO BUTTON DETAIL VIEW ── -->
+    <div id="radio-detail-view" class="detail-view" data-component="radio">
+      <a class="detail-back" href="#" onclick="showGrid(); return false;">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        All Components
+      </a>
+
+      <div class="detail-header">
+        <div class="detail-header-left">
+          <h1>Radio Button</h1>
+          <p>Single selection control for mutually exclusive choices in forms and settings. Atomic component — does not include label or group logic.</p>
+          <div class="detail-meta">
+            <div class="detail-meta-chip">
+              <svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0a8 8 0 100 16A8 8 0 008 0zM4.5 7.5h5a.5.5 0 010 1h-5a.5.5 0 010-1z"/></svg>
+              Frost One v1.0
+            </div>
+            <div class="detail-meta-chip">
+              <svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor"><path d="M1 3a2 2 0 012-2h10a2 2 0 012 2v10a2 2 0 01-2 2H3a2 2 0 01-2-2V3zm2 0v10h10V3H3z"/></svg>
+              Figma · node 400:2135
+            </div>
+            <div class="detail-meta-chip">Atomic · Forms</div>
+            <div class="detail-meta-chip">16 variants</div>
+          </div>
+        </div>
+        <div style="display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end;">
+          <span class="tag tag-stable" style="padding:5px 14px; font-size:12px;">Stable</span>
+        </div>
+      </div>
+
+      <!-- LIVE PREVIEW -->
+      <div class="preview-section">
+        <div class="preview-header">
+          <span class="preview-title">Live Preview</span>
+          <div class="preview-controls">
+            <button class="preview-control-btn active" onclick="switchRadioSize('small', this)">Small</button>
+            <button class="preview-control-btn" onclick="switchRadioSize('medium', this)">Medium</button>
+          </div>
+        </div>
+        <div class="preview-canvas" style="display:flex; align-items:center; justify-content:center; min-height:120px;">
+          <label style="display:inline-flex; align-items:center; gap:10px; cursor:pointer; user-select:none; font-family:var(--font); font-size:14px; color:var(--text-primary);">
+            <div id="live-radio" class="frost-radio small" onclick="toggleLiveRadio(event)" role="radio" aria-checked="false" tabindex="0">
+              <div class="frost-radio-dot"></div>
+            </div>
+            <span id="live-radio-text">Unselected</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- COMPONENT TRAITS -->
+      <div class="traits-section">
+        <div class="section-heading">Component Traits</div>
+        <div class="traits-grid">
+          <div class="trait-card trait-pass">
+            <div class="trait-name">Reusable</div>
+            <div class="trait-badge">Pass</div>
+            <div class="trait-desc">Parameterised by state & size — usable in any form context without modification.</div>
+          </div>
+          <div class="trait-card trait-pass">
+            <div class="trait-name">Self-contained</div>
+            <div class="trait-badge">Pass</div>
+            <div class="trait-desc">Pure visual indicator with no external dependencies. Colors match the checkbox system.</div>
+          </div>
+          <div class="trait-card trait-pass">
+            <div class="trait-name">Consistent</div>
+            <div class="trait-badge">Pass</div>
+            <div class="trait-desc">Same variant naming convention as Checkbox — Type, State, Size properties with identical values.</div>
+          </div>
+          <div class="trait-card trait-pass">
+            <div class="trait-name">Composable</div>
+            <div class="trait-badge">Pass</div>
+            <div class="trait-desc">Atom-level. Designed to be embedded in RadioItem (molecule) and RadioGroup (organism).</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MOBILE & WEB READINESS -->
+      <div class="readiness-section">
+        <div class="readiness-section-header">
+          <span class="readiness-section-title">Mobile &amp; Web Readiness Criteria</span>
+          <span class="status-pill warn">4 Pass · 3 Flag</span>
+        </div>
+        <table class="readiness-table">
+          <thead>
+            <tr>
+              <th style="width:60px;">ID</th>
+              <th>Criterion</th>
+              <th>Observation</th>
+              <th style="width:110px;">Result</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="criterion-id">C1</span></td>
+              <td>Layer Structure</td>
+              <td>Component Set with 16 variants. Outer circle frame + inner dot ellipse for selected states. Clean hierarchy.</td>
+              <td><span class="readiness-result pass">✓ Pass</span></td>
+            </tr>
+            <tr>
+              <td><span class="criterion-id">C2</span></td>
+              <td>Variant Naming</td>
+              <td>Property=Value convention matches Checkbox: Type=Unselected/Selected, State=Enabled/Hovered/Focused/Disabled, Size=Small/Medium.</td>
+              <td><span class="readiness-result pass">✓ Pass</span></td>
+            </tr>
+            <tr>
+              <td><span class="criterion-id">C3</span></td>
+              <td>Token Coverage</td>
+              <td>Fill, border, and radius values are hardcoded hex. No design tokens applied yet.</td>
+              <td><span class="readiness-result fail">✗ Fail</span></td>
+            </tr>
+            <tr>
+              <td><span class="criterion-id">C4</span></td>
+              <td>Native Mappability</td>
+              <td>Variants map to Boolean + enums. Missing Pressed state prevents full native interaction parity.</td>
+              <td><span class="readiness-result flag">⚑ Flag</span></td>
+            </tr>
+            <tr>
+              <td><span class="criterion-id">C5</span></td>
+              <td>Interaction States</td>
+              <td>Hovered, Focused, Disabled present. Pressed missing — required for Android ripple and iOS tap highlight.</td>
+              <td><span class="readiness-result flag">⚑ Flag</span></td>
+            </tr>
+            <tr>
+              <td><span class="criterion-id">C6</span></td>
+              <td>Asset Quality</td>
+              <td>Inner dot is a vector ellipse. Scales correctly at all resolutions. No raster dependencies.</td>
+              <td><span class="readiness-result pass">✓ Pass</span></td>
+            </tr>
+            <tr>
+              <td><span class="criterion-id">C7</span></td>
+              <td>Code Connect Linkability</td>
+              <td>Type, State, and Size map to Code Connect props. Missing accessibilityLabel prop blocks full linkability.</td>
+              <td><span class="readiness-result flag">⚑ Flag</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- SCORE SUMMARY -->
+      <div class="score-summary">
+        <div class="score-summary-title">Assessment Overview</div>
+        <div class="score-bars">
+          <div class="score-bar-row">
+            <span class="score-bar-label">Single Responsibility</span>
+            <div class="score-bar-track"><div class="score-bar-fill pass" style="width:95%"></div></div>
+            <span class="score-bar-value" style="color:var(--pass)">95%</span>
+          </div>
+          <div class="score-bar-row">
+            <span class="score-bar-label">Variant Coverage</span>
+            <div class="score-bar-track"><div class="score-bar-fill warn" style="width:70%"></div></div>
+            <span class="score-bar-value" style="color:var(--warn)">70%</span>
+          </div>
+          <div class="score-bar-row">
+            <span class="score-bar-label">API Design</span>
+            <div class="score-bar-track"><div class="score-bar-fill warn" style="width:60%"></div></div>
+            <span class="score-bar-value" style="color:var(--warn)">60%</span>
+          </div>
+          <div class="score-bar-row">
+            <span class="score-bar-label">Token Usage</span>
+            <div class="score-bar-track"><div class="score-bar-fill fail" style="width:20%"></div></div>
+            <span class="score-bar-value" style="color:var(--fail)">20%</span>
+          </div>
+          <div class="score-bar-row">
+            <span class="score-bar-label">Accessibility</span>
+            <div class="score-bar-track"><div class="score-bar-fill fail" style="width:35%"></div></div>
+            <span class="score-bar-value" style="color:var(--fail)">35%</span>
+          </div>
+          <div class="score-bar-row">
+            <span class="score-bar-label">Code Connect Ready</span>
+            <div class="score-bar-track"><div class="score-bar-fill warn" style="width:65%"></div></div>
+            <span class="score-bar-value" style="color:var(--warn)">65%</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ASSESSMENT GRID -->
+      <div class="assessment-grid">
+
+        <div class="assessment-section">
+          <div class="assessment-section-header">
+            <div class="assessment-section-title"><span class="section-number">1</span> Single Responsibility</div>
+            <span class="status-pill pass">Pass</span>
+          </div>
+          <div class="assessment-section-body">
+            <div class="assessment-row">
+              <span class="assessment-icon">✅</span>
+              <div class="assessment-row-label"><strong>One job: single selection state</strong> Communicates selected/unselected for mutually exclusive choices.</div>
+            </div>
+            <div class="assessment-row">
+              <span class="assessment-icon">✅</span>
+              <div class="assessment-row-label"><strong>Correctly excludes label & group logic</strong> Label belongs to RadioItem (molecular), group logic to RadioGroup (organism).</div>
+            </div>
+            <div class="assessment-row">
+              <span class="assessment-icon">✅</span>
+              <div class="assessment-row-label"><strong>No indeterminate needed</strong> Unlike checkbox, radio buttons are binary by design — no third state required.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="assessment-section">
+          <div class="assessment-section-header">
+            <div class="assessment-section-title"><span class="section-number">2</span> Abstraction Level</div>
+            <span class="status-pill pass">Pass</span>
+          </div>
+          <div class="assessment-section-body">
+            <div class="assessment-row">
+              <span class="assessment-icon">✅</span>
+              <div class="assessment-row-label"><strong>Correctly atomic</strong> Circle + dot — pure visual state machine with no component children.</div>
+            </div>
+            <div class="assessment-row">
+              <span class="assessment-icon">✅</span>
+              <div class="assessment-row-label"><strong>RadioItem is molecular</strong> Correct separation between atom (indicator) and molecule (indicator + label).</div>
+            </div>
+            <div class="assessment-row">
+              <span class="assessment-icon">⚠️</span>
+              <div class="assessment-row-label"><strong>RadioGroup not defined</strong> Group pattern needed for mutually exclusive selection form use cases.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="assessment-section">
+          <div class="assessment-section-header">
+            <div class="assessment-section-title"><span class="section-number">3</span> Variant &amp; State Coverage</div>
+          </div>
+          <div class="assessment-section-body">
+            <table class="variant-table">
+              <thead><tr><th>State</th><th>Small</th><th>Medium</th><th>Status</th></tr></thead>
+              <tbody>
+                <tr><td>Enabled (Unselected)</td><td>✅</td><td>✅</td><td><span class="status-pill pass">Pass</span></td></tr>
+                <tr><td>Enabled (Selected)</td><td>✅</td><td>✅</td><td><span class="status-pill pass">Pass</span></td></tr>
+                <tr><td>Hovered</td><td>✅</td><td>✅</td><td><span class="status-pill pass">Pass</span></td></tr>
+                <tr><td>Focused</td><td>✅</td><td>✅</td><td><span class="status-pill pass">Pass</span></td></tr>
+                <tr><td>Disabled</td><td>✅</td><td>✅</td><td><span class="status-pill pass">Pass</span></td></tr>
+                <tr><td>Pressed</td><td>🚩</td><td>🚩</td><td><span class="status-pill fail">Missing</span></td></tr>
+                <tr><td>Error</td><td>🚩</td><td>🚩</td><td><span class="status-pill fail">Missing</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="assessment-section">
+          <div class="assessment-section-header">
+            <div class="assessment-section-title"><span class="section-number">4</span> Token Usage</div>
+            <span class="status-pill fail">Fail</span>
+          </div>
+          <div class="assessment-section-body">
+            <div class="assessment-row">
+              <span class="assessment-icon">🚩</span>
+              <div class="assessment-row-label"><strong>Fill hardcoded: <code>#2563eb</code></strong> Should reference <code>radio.fill.selected</code></div>
+            </div>
+            <div class="assessment-row">
+              <span class="assessment-icon">🚩</span>
+              <div class="assessment-row-label"><strong>Border hardcoded: <code>#cbd5e1</code></strong> Should reference <code>radio.border.default</code></div>
+            </div>
+            <div class="assessment-row">
+              <span class="assessment-icon">🚩</span>
+              <div class="assessment-row-label"><strong>Disabled color hardcoded: <code>#bfdbfe</code></strong> Should use opacity token on base fill color.</div>
+            </div>
+            <div class="assessment-row">
+              <span class="assessment-icon">🚩</span>
+              <div class="assessment-row-label"><strong>Focus ring hardcoded: <code>#dbe8ff</code></strong> Should reference <code>focus.ring.color</code></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="assessment-section">
+          <div class="assessment-section-header">
+            <div class="assessment-section-title"><span class="section-number">5</span> Accessibility</div>
+            <span class="status-pill fail">Fail</span>
+          </div>
+          <div class="assessment-section-body">
+            <div class="assessment-row">
+              <span class="assessment-icon">🚩</span>
+              <div class="assessment-row-label"><strong>Touch target too small</strong> Small (12px) &amp; Medium (16px) are below 44pt / 48dp minimum.</div>
+            </div>
+            <div class="assessment-row">
+              <span class="assessment-icon">🚩</span>
+              <div class="assessment-row-label"><strong>No accessibilityLabel defined</strong> Screen reader cannot describe the radio option without a label.</div>
+            </div>
+            <div class="assessment-row">
+              <span class="assessment-icon">🚩</span>
+              <div class="assessment-row-label"><strong>Group role not documented</strong> Radio buttons require role="radiogroup" on the parent — not specified.</div>
+            </div>
+            <div class="assessment-row">
+              <span class="assessment-icon">❓</span>
+              <div class="assessment-row-label"><strong>Color contrast not audited</strong> Focus ring and disabled states need WCAG 3:1 verification.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="assessment-section">
+          <div class="assessment-section-header">
+            <div class="assessment-section-title"><span class="section-number">6</span> API Surface</div>
+          </div>
+          <div class="assessment-section-body">
+            <div class="assessment-row">
+              <span class="assessment-icon">✅</span>
+              <div class="assessment-row-label"><strong>Type → isSelected: Boolean</strong> Clean 2-value variant maps to Boolean.</div>
+            </div>
+            <div class="assessment-row">
+              <span class="assessment-icon">✅</span>
+              <div class="assessment-row-label"><strong>State → RadioState enum</strong> 4 values map cleanly to sealed class / enum.</div>
+            </div>
+            <div class="assessment-row">
+              <span class="assessment-icon">✅</span>
+              <div class="assessment-row-label"><strong>Size → RadioSize enum</strong> Small / Medium map to typed enum.</div>
+            </div>
+            <div class="assessment-row">
+              <span class="assessment-icon">🚩</span>
+              <div class="assessment-row-label"><strong>onSelect not documented</strong> Required callback has no Figma spec counterpart.</div>
+            </div>
+            <div class="assessment-row">
+              <span class="assessment-icon">🚩</span>
+              <div class="assessment-row-label"><strong>accessibilityLabel not defined</strong> Required prop missing from component definition.</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- API SNIPPET -->
+      <div style="margin-bottom:32px;">
+        <div style="font-size:14px;font-weight:600;margin-bottom:14px;color:var(--text-primary);">Minimum API Contract</div>
+        <div class="api-block">
+          <div class="api-block-header">
+            <span class="api-block-lang">Kotlin · Compose</span>
+            <button class="api-block-copy" onclick="copyCode(this)">Copy</button>
+          </div>
+          <pre><span class="syn-comment">// Frost One — RadioButton · Minimum Shared API</span>
+<span class="syn-keyword">@Composable</span>
+<span class="syn-keyword">fun</span> <span class="syn-function">FrostRadioButton</span>(
+    <span class="syn-comment">// ── Required ──────────────────────────────────</span>
+    isSelected: <span class="syn-type">Boolean</span>,
+    onSelect: () -> <span class="syn-type">Unit</span>,
+    accessibilityLabel: <span class="syn-type">String</span>,
+
+    <span class="syn-comment">// ── Optional ──────────────────────────────────</span>
+    state: <span class="syn-type">RadioState</span> = RadioState.<span class="syn-function">Enabled</span>,
+    size: <span class="syn-type">RadioSize</span> = RadioSize.<span class="syn-function">Medium</span>,
+    accessibilityHint: <span class="syn-type">String</span>? = <span class="syn-number">null</span>,
+    modifier: <span class="syn-type">Modifier</span> = Modifier
+) { <span class="syn-comment">/* ... */</span> }</pre>
+        </div>
+        <div class="api-block">
+          <div class="api-block-header">
+            <span class="api-block-lang">Swift · SwiftUI</span>
+            <button class="api-block-copy" onclick="copyCode(this)">Copy</button>
+          </div>
+          <pre><span class="syn-comment">// Frost One — RadioButton · SwiftUI</span>
+<span class="syn-keyword">struct</span> <span class="syn-type">FrostRadioButton</span>: <span class="syn-type">View</span> {
+    <span class="syn-comment">// ── Required ──────────────────────────────────</span>
+    <span class="syn-keyword">@Binding var</span> isSelected: <span class="syn-type">Bool</span>
+    <span class="syn-keyword">let</span> accessibilityLabel: <span class="syn-type">String</span>
+    <span class="syn-keyword">let</span> onSelect: () -> <span class="syn-type">Void</span>
+
+    <span class="syn-comment">// ── Optional ──────────────────────────────────</span>
+    <span class="syn-keyword">var</span> state: <span class="syn-type">RadioState</span> = .<span class="syn-function">enabled</span>
+    <span class="syn-keyword">var</span> size: <span class="syn-type">RadioSize</span> = .<span class="syn-function">medium</span>
+    <span class="syn-keyword">var</span> accessibilityHint: <span class="syn-type">String</span>? = <span class="syn-number">nil</span>
+}</pre>
+        </div>
+      </div>
+
+      <!-- KEY FINDINGS -->
+      <div>
+        <div style="font-size:14px;font-weight:600;margin-bottom:14px;color:var(--text-primary);">Key Findings &amp; Recommendations</div>
+        <div class="findings-list">
+          <div class="finding-item pass">
+            <span class="finding-icon">✅</span>
+            <div class="finding-content">
+              <div class="finding-title">Solid variant structure — 16 variants, consistent naming with Checkbox</div>
+              <div class="finding-desc">Same Property=Value convention as Checkbox. Type, State, and Size map directly to Code Connect. Component family is coherent.</div>
+            </div>
+          </div>
+          <div class="finding-item pass">
+            <span class="finding-icon">✅</span>
+            <div class="finding-content">
+              <div class="finding-title">All four component traits pass</div>
+              <div class="finding-desc">Reusable, self-contained, consistent with sibling components, and correctly composable at atomic level.</div>
+            </div>
+          </div>
+          <div class="finding-item fail">
+            <span class="finding-icon">🚩</span>
+            <div class="finding-content">
+              <div class="finding-title">All color values are hardcoded — tokenize immediately</div>
+              <div class="finding-desc">Fill (#2563eb), border (#cbd5e1), disabled (#bfdbfe), and focus ring (#dbe8ff) need token references. Should share tokens with Checkbox where possible.</div>
+            </div>
+          </div>
+          <div class="finding-item fail">
+            <span class="finding-icon">🚩</span>
+            <div class="finding-content">
+              <div class="finding-title">Touch target is below platform minimums on both sizes</div>
+              <div class="finding-desc">Small (12px) and Medium (16px) are below iOS 44pt and Android 48dp minimums. Add an invisible 44×44 hit area layer.</div>
+            </div>
+          </div>
+          <div class="finding-item warn">
+            <span class="finding-icon">⚠️</span>
+            <div class="finding-content">
+              <div class="finding-title">Pressed and Error states are missing</div>
+              <div class="finding-desc">Priority order: Pressed (UX gap for mobile) → Error (form validation). No Indeterminate needed for radio buttons.</div>
+            </div>
+          </div>
+          <div class="finding-item fail">
+            <span class="finding-icon">🚩</span>
+            <div class="finding-content">
+              <div class="finding-title">No accessibility spec — role and group semantics undefined</div>
+              <div class="finding-desc">Radio buttons require role="radio" with role="radiogroup" on the parent. accessibilityLabel is required. State announcements need documentation.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end radio detail-view -->
 
   </main>
 </div>
@@ -1862,31 +2368,44 @@
     label.textContent = isSelected ? 'Checked' : 'Unchecked';
   }
 
+  // ── LIVE RADIO PREVIEW ──
+  function toggleLiveRadio(e) {
+    e.stopPropagation();
+    const rb = document.getElementById('live-radio');
+    const label = document.getElementById('live-radio-text');
+    const isSelected = rb.classList.toggle('selected');
+    rb.setAttribute('aria-checked', isSelected);
+    label.textContent = isSelected ? 'Selected' : 'Unselected';
+  }
+
+  function switchRadioSize(size, btn) {
+    const rb = document.getElementById('live-radio');
+    rb.classList.remove('small', 'medium');
+    rb.classList.add(size);
+    btn.parentElement.querySelectorAll('.preview-control-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+
   document.addEventListener('DOMContentLoaded', function() {
-    const cb = document.getElementById('live-checkbox');
-    if (cb) {
-      cb.addEventListener('mousedown', function(e) {
-        cb.classList.add('focused');
-      });
-      cb.addEventListener('mouseup', function() {
-        cb.classList.remove('focused');
-      });
-      cb.addEventListener('mouseleave', function() {
-        cb.classList.remove('focused');
-      });
-      cb.addEventListener('keydown', function(e) {
-        if (e.key === ' ' || e.key === 'Enter') {
-          e.preventDefault();
-          cb.classList.add('focused');
-          toggleLiveCheckbox(e);
-        }
-      });
-      cb.addEventListener('keyup', function(e) {
-        if (e.key === ' ' || e.key === 'Enter') {
-          cb.classList.remove('focused');
-        }
-      });
-    }
+    ['live-checkbox', 'live-radio'].forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el) {
+        el.addEventListener('mousedown', function() { el.classList.add('focused'); });
+        el.addEventListener('mouseup', function() { el.classList.remove('focused'); });
+        el.addEventListener('mouseleave', function() { el.classList.remove('focused'); });
+        el.addEventListener('keydown', function(e) {
+          if (e.key === ' ' || e.key === 'Enter') {
+            e.preventDefault();
+            el.classList.add('focused');
+            if (id === 'live-checkbox') toggleLiveCheckbox(e);
+            else toggleLiveRadio(e);
+          }
+        });
+        el.addEventListener('keyup', function(e) {
+          if (e.key === ' ' || e.key === 'Enter') el.classList.remove('focused');
+        });
+      }
+    });
   });
 
   function switchPreviewSize(size, btn) {
@@ -1901,14 +2420,20 @@
   function showGrid() {
     document.getElementById('grid-view').style.display = '';
     document.getElementById('detail-view').classList.remove('visible');
+    document.getElementById('radio-detail-view').classList.remove('visible');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  function showDetail() {
+  function showDetail(component) {
     document.getElementById('grid-view').style.display = 'none';
-    document.getElementById('detail-view').classList.add('visible');
+    document.getElementById('detail-view').classList.remove('visible');
+    document.getElementById('radio-detail-view').classList.remove('visible');
+    if (component === 'radio') {
+      document.getElementById('radio-detail-view').classList.add('visible');
+    } else {
+      document.getElementById('detail-view').classList.add('visible');
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    // Animate score bars
     setTimeout(() => {
       document.querySelectorAll('.score-bar-fill').forEach(bar => {
         const w = bar.style.width;
