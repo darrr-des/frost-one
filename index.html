@@ -660,12 +660,14 @@
       border-color: #2563eb;
     }
 
-    .frost-checkbox.hovered {
+    .frost-checkbox.hovered,
+    .frost-checkbox:hover:not(.disabled) {
       background: #f8fafc;
       border-color: #cbd5e1;
     }
 
-    .frost-checkbox.selected.hovered {
+    .frost-checkbox.selected.hovered,
+    .frost-checkbox.selected:hover:not(.disabled) {
       background: #1d4ed8;
       border-color: #1d4ed8;
     }
@@ -1380,59 +1382,17 @@
         <div class="preview-header">
           <span class="preview-title">Live Preview</span>
           <div class="preview-controls">
-            <button class="preview-control-btn active">All States</button>
-            <button class="preview-control-btn">Small</button>
-            <button class="preview-control-btn">Medium</button>
+            <button class="preview-control-btn active" onclick="switchPreviewSize('small', this)">Small</button>
+            <button class="preview-control-btn" onclick="switchPreviewSize('medium', this)">Medium</button>
           </div>
         </div>
-        <div class="preview-canvas">
-          <div class="preview-states">
-            <div class="preview-state-group">
-              <span class="preview-state-label">Enabled</span>
-              <div class="preview-checkboxes">
-                <div class="frost-checkbox medium"></div>
-                <div class="frost-checkbox small"></div>
-              </div>
+        <div class="preview-canvas" style="display:flex; align-items:center; justify-content:center; min-height:120px;">
+          <label id="live-checkbox-label" style="display:inline-flex; align-items:center; gap:10px; cursor:pointer; user-select:none; font-family:var(--font); font-size:14px; color:var(--text-primary);">
+            <div id="live-checkbox" class="frost-checkbox small" onclick="toggleLiveCheckbox(event)" role="checkbox" aria-checked="false" tabindex="0">
+              <svg viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
-            <div class="preview-state-group">
-              <span class="preview-state-label">Selected</span>
-              <div class="preview-checkboxes">
-                <div class="frost-checkbox medium selected">
-                  <svg viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </div>
-                <div class="frost-checkbox small selected">
-                  <svg viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </div>
-              </div>
-            </div>
-            <div class="preview-state-group">
-              <span class="preview-state-label">Hovered</span>
-              <div class="preview-checkboxes">
-                <div class="frost-checkbox medium hovered"></div>
-                <div class="frost-checkbox medium selected hovered">
-                  <svg viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </div>
-              </div>
-            </div>
-            <div class="preview-state-group">
-              <span class="preview-state-label">Focused</span>
-              <div class="preview-checkboxes">
-                <div class="frost-checkbox medium focused"></div>
-                <div class="frost-checkbox medium selected focused">
-                  <svg viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </div>
-              </div>
-            </div>
-            <div class="preview-state-group">
-              <span class="preview-state-label">Disabled</span>
-              <div class="preview-checkboxes">
-                <div class="frost-checkbox medium disabled"></div>
-                <div class="frost-checkbox medium selected disabled">
-                  <svg viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </div>
-              </div>
-            </div>
-          </div>
+            <span id="live-checkbox-text">Unchecked</span>
+          </label>
         </div>
       </div>
 
@@ -1890,6 +1850,24 @@
 </div>
 
 <script>
+  // ── LIVE CHECKBOX PREVIEW ──
+  function toggleLiveCheckbox(e) {
+    e.preventDefault();
+    const cb = document.getElementById('live-checkbox');
+    const label = document.getElementById('live-checkbox-text');
+    const isSelected = cb.classList.toggle('selected');
+    cb.setAttribute('aria-checked', isSelected);
+    label.textContent = isSelected ? 'Checked' : 'Unchecked';
+  }
+
+  function switchPreviewSize(size, btn) {
+    const cb = document.getElementById('live-checkbox');
+    cb.classList.remove('small', 'medium');
+    cb.classList.add(size);
+    btn.parentElement.querySelectorAll('.preview-control-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+
   // ── VIEW SWITCHING ──
   function showGrid() {
     document.getElementById('grid-view').style.display = '';
