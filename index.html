@@ -1387,12 +1387,35 @@
           </div>
         </div>
         <div class="preview-canvas" style="display:flex; align-items:center; justify-content:center; min-height:120px;">
-          <label id="live-checkbox-label" style="display:inline-flex; align-items:center; gap:10px; cursor:pointer; user-select:none; font-family:var(--font); font-size:14px; color:var(--text-primary);">
-            <div id="live-checkbox" class="frost-checkbox small" onclick="toggleLiveCheckbox(event)" role="checkbox" aria-checked="false" tabindex="0">
-              <svg viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div style="display:flex; gap:40px; align-items:flex-start;">
+            <div style="display:flex; flex-direction:column; align-items:center; gap:8px;">
+              <label style="display:inline-flex; align-items:center; gap:10px; cursor:pointer; user-select:none; font-family:var(--font); font-size:14px; color:var(--text-primary);">
+                <div id="live-checkbox" class="frost-checkbox small" onclick="toggleLiveCheckbox(event)" role="checkbox" aria-checked="false" tabindex="0">
+                  <svg viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <span id="live-checkbox-text">Unchecked</span>
+              </label>
+              <span style="font-size:11px; color:var(--text-tertiary); font-family:var(--font);">Default</span>
             </div>
-            <span id="live-checkbox-text">Unchecked</span>
-          </label>
+            <div style="display:flex; flex-direction:column; align-items:center; gap:8px;">
+              <label style="display:inline-flex; align-items:center; gap:10px; cursor:default; user-select:none; font-family:var(--font); font-size:14px; color:var(--text-primary);">
+                <div id="live-checkbox-hovered" class="frost-checkbox small hovered">
+                  <svg viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <span>Hovered</span>
+              </label>
+              <span style="font-size:11px; color:var(--text-tertiary); font-family:var(--font);">Hover</span>
+            </div>
+            <div style="display:flex; flex-direction:column; align-items:center; gap:8px;">
+              <label style="display:inline-flex; align-items:center; gap:10px; cursor:default; user-select:none; font-family:var(--font); font-size:14px; color:var(--text-primary);">
+                <div id="live-checkbox-focused" class="frost-checkbox small focused">
+                  <svg viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <span>Focused</span>
+              </label>
+              <span style="font-size:11px; color:var(--text-tertiary); font-family:var(--font);">Focus</span>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -1861,9 +1884,11 @@
   }
 
   function switchPreviewSize(size, btn) {
-    const cb = document.getElementById('live-checkbox');
-    cb.classList.remove('small', 'medium');
-    cb.classList.add(size);
+    ['live-checkbox', 'live-checkbox-hovered', 'live-checkbox-focused'].forEach(id => {
+      const el = document.getElementById(id);
+      el.classList.remove('small', 'medium');
+      el.classList.add(size);
+    });
     btn.parentElement.querySelectorAll('.preview-control-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
   }
