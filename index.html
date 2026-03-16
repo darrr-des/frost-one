@@ -1858,23 +1858,33 @@
     const cb = document.getElementById('live-checkbox');
     const label = document.getElementById('live-checkbox-text');
     const isSelected = cb.classList.toggle('selected');
-    cb.classList.add('focused');
     cb.setAttribute('aria-checked', isSelected);
     label.textContent = isSelected ? 'Checked' : 'Unchecked';
-    cb.focus();
   }
 
   document.addEventListener('DOMContentLoaded', function() {
     const cb = document.getElementById('live-checkbox');
     if (cb) {
+      cb.addEventListener('mousedown', function(e) {
+        cb.classList.add('focused');
+      });
+      cb.addEventListener('mouseup', function() {
+        cb.classList.remove('focused');
+      });
+      cb.addEventListener('mouseleave', function() {
+        cb.classList.remove('focused');
+      });
       cb.addEventListener('keydown', function(e) {
         if (e.key === ' ' || e.key === 'Enter') {
           e.preventDefault();
+          cb.classList.add('focused');
           toggleLiveCheckbox(e);
         }
       });
-      cb.addEventListener('blur', function() {
-        cb.classList.remove('focused');
+      cb.addEventListener('keyup', function(e) {
+        if (e.key === ' ' || e.key === 'Enter') {
+          cb.classList.remove('focused');
+        }
       });
     }
   });
